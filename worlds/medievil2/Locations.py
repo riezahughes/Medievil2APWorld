@@ -109,6 +109,7 @@ location_tables = {
     ],
     "The Museum": [
         Medievil2LocationData("Key Item: Museum Key", "Ammo: Gold Shield (100)", Medievil2LocationCategory.KEY_ITEM),
+        Medievil2LocationData("Key Item: Dinosaur Key", "Ammo: Gold Shield (100)", Medievil2LocationCategory.KEY_ITEM),
         Medievil2LocationData("Key Item: Cannonball", "Ammo: Gold Shield (100)", Medievil2LocationCategory.KEY_ITEM),
         Medievil2LocationData("Key Item: Torch", "Ammo: Gold Shield (100)", Medievil2LocationCategory.KEY_ITEM),
         Medievil2LocationData("Equipment: Short Sword", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WEAPON),
@@ -119,6 +120,8 @@ location_tables = {
         Medievil2LocationData("Gold Coins: Mausoleum Room 2nd Floor 2", "Ammo: Gold Shield (100)", Medievil2LocationCategory.GOLD),
         Medievil2LocationData("Gold Coins: Mausoleum Room 2nd Floor 3", "Ammo: Gold Shield (100)", Medievil2LocationCategory.GOLD),
         Medievil2LocationData("Gold Coins: Buddah Statue Staircase", "Ammo: Gold Shield (100)", Medievil2LocationCategory.GOLD),
+        Medievil2LocationData("Gold Coins: Zarok Room Rafters 1", "Ammo: Gold Shield (100)", Medievil2LocationCategory.GOLD),
+        Medievil2LocationData("Gold Coins: Zarok Room Rafters 2", "Ammo: Gold Shield (100)", Medievil2LocationCategory.GOLD),
         Medievil2LocationData("Chalice: The Museum", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_PICKUP),
         Medievil2LocationData("Cleared: The Museum", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LEVEL_END),
     ],
