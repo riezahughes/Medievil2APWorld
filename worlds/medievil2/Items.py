@@ -217,6 +217,8 @@ def BuildItemPool(count: int, options) -> List[str]:
         or item_data.category == Medievil2ItemCategory.TRAP
     ]
 
+    print(filler_item_names)
+
     for _ in range(count - len(item_pool_names)):
         if filler_item_names:
             item_name_to_add = random.choice(filler_item_names)

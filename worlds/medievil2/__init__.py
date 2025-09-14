@@ -55,11 +55,16 @@ class Medievil2World(World):
         self.enabled_location_categories = set()
 
     def generate_early(self):
+        self.enabled_location_categories.add(Medievil2LocationCategory.KEY_ITEM)
         self.enabled_location_categories.add(Medievil2LocationCategory.CHEST)
         self.enabled_location_categories.add(Medievil2LocationCategory.BOSS)
         self.enabled_location_categories.add(Medievil2LocationCategory.CHALICE_PICKUP)
         self.enabled_location_categories.add(Medievil2LocationCategory.CHALICE_REWARD)
-        self.enabled_location_categories.add(Medievil2LocationCategory.KEY_ITEM)
+        self.enabled_location_categories.add(Medievil2LocationCategory.BOOK)
+        self.enabled_location_categories.add(Medievil2LocationCategory.GOLD)
+        self.enabled_location_categories.add(Medievil2LocationCategory.ENERGY)
+        self.enabled_location_categories.add(Medievil2LocationCategory.LIFE_BOTTLE)
+        self.enabled_location_categories.add(Medievil2LocationCategory.WEAPON)
         self.enabled_location_categories.add(Medievil2LocationCategory.LEVEL_END)
 
     def create_regions(self):
