@@ -10,6 +10,7 @@ from worlds.generic.Rules import set_rule, add_rule, add_item_rule
 from .Items import Medievil2Item, Medievil2ItemCategory, item_dictionary, item_descriptions, BuildItemPool
 from .Locations import Medievil2Location, Medievil2LocationCategory, location_tables, location_dictionary
 from .Options import Medievil2Options, GoalOptions
+from .VictoryConditions import defeat_demon_victory
 
 
 class Medievil2Web(WebWorld):
@@ -62,10 +63,12 @@ class Medievil2World(World):
         self.enabled_location_categories.add(Medievil2LocationCategory.CHALICE_REWARD)
         self.enabled_location_categories.add(Medievil2LocationCategory.BOOK)
         self.enabled_location_categories.add(Medievil2LocationCategory.GOLD)
+        self.enabled_location_categories.add(Medievil2LocationCategory.WINSTON)
         self.enabled_location_categories.add(Medievil2LocationCategory.ENERGY)
         self.enabled_location_categories.add(Medievil2LocationCategory.LIFE_BOTTLE)
         self.enabled_location_categories.add(Medievil2LocationCategory.WEAPON)
         self.enabled_location_categories.add(Medievil2LocationCategory.LEVEL_END)
+        self.enabled_location_categories.add(Medievil2LocationCategory.EVENT)
 
     def create_regions(self):
         # Create Regions
@@ -223,25 +226,13 @@ class Medievil2World(World):
         return "Gold: (50)"  # this clearly needs looked into
 
     def set_rules(self) -> None:
-        def is_level_cleared(self, location: str, state: CollectionState):
-            return state.can_reach_location("Cleared: " + location, self.player)
-
-        def is_boss_defeated(self, boss: str, state: CollectionState):  # can used later
-            return state.has("Boss: " + boss, self.player, 1)
-
-        def has_keyitems_required(self, items: list[str], state: CollectionState):
-            passed_check = True
-            for item in items:
-                if state.has("Key Item: " + item, self.player, 1) is False:
-                    passed_check = False
-            return passed_check
-
         for region in self.multiworld.get_regions(self.player):
             for location in region.locations:
                 set_rule(location, lambda state: True)
 
         if self.options.goal.value == GoalOptions.DEFEAT_DEMON:
-            self.multiworld.completion_condition[self.player] = lambda state: state.can_reach_location("Cleared: The Demon", self.player)
+            self.multiworld.completion_condition[self.player] = lambda state: defeat_demon_victory(self, state)
+
         # Map rules
 
         # ITEM SPECIFIC RULES
@@ -291,10 +282,13 @@ class Medievil2World(World):
 
         slot_data = {
             "options": {
-                "guaranteed_items": self.options.guaranteed_items.value,
                 "goal": self.options.goal.value,
-                "deathlink": self.options.deathlink.value,
                 "progression_option": self.options.progression_option.value,
+                # "include_dankenstein_parts": self.options.include_dankenstein_parts.value,
+                "include_chalices_in_checks": self.options.include_chalices_in_checks.value,
+                "keyitemsanity": self.options.keyitemsanity.value,
+                "deathlink": self.options.deathlink.value,
+                "guaranteed_items": self.options.guaranteed_items.value,
             },
             "seed": self.multiworld.seed_name,  # to verify the server's multiworld
             "slot": self.multiworld.player_name[self.player],  # to connect to server

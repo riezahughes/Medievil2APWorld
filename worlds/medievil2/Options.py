@@ -5,14 +5,14 @@ from Options import Toggle, DefaultOnToggle, Option, Range, Choice, ItemDict, De
 
 class GoalOptions:
     DEFEAT_DEMON = 0
-    HIDDEN_ROOMS = 1
-    CHALICE = 2
-    ALL = 3
+    # HIDDEN_ROOMS = 1
+    # CHALICE = 2
+    # ALL = 3
 
 
 class ProgressionOptions:
     VANILLA = 0
-    RANDOM = 1
+    # RANDOM = 1
 
 
 class GuaranteedItemsOption(ItemDict):
@@ -31,9 +31,9 @@ class GoalOption(Choice):
     display_name = "Completion Goal"
     default = GoalOptions.DEFEAT_DEMON
     option_demon = GoalOptions.DEFEAT_DEMON
-    option_hidden_rooms = GoalOptions.HIDDEN_ROOMS
-    option_chalice = GoalOptions.CHALICE
-    option_both = GoalOptions.ALL
+    # option_hidden_rooms = GoalOptions.HIDDEN_ROOMS
+    # option_chalice = GoalOptions.CHALICE
+    # option_both = GoalOptions.ALL
 
 
 class ProgressionOption(Choice):
@@ -46,22 +46,22 @@ class ProgressionOption(Choice):
     option_vanilla = ProgressionOptions.VANILLA
 
 
-class IncludeSecretRoomsInChecks(Toggle):
-    """Toggle whether to include dan hand secret areas items in checks"""
+# class IncludeSecretRoomsInChecks(Toggle):
+#     """Toggle whether to include dan hand secret areas items in checks (not implimented. Will always be on)"""
 
-    display_name = "Include Secret Items"
-    default = 1
-    option_true = 1
-    option_false = 0
+#     display_name = "Include Secret Items"
+#     default = 1
+#     option_true = 1
+#     option_false = 0
 
 
-class IncludeSavingPumpkinSoulsInChecksToggle(Toggle):
-    """Include saving all souls in each room in Kew Gardens"""
+# class IncludeSavingPumpkinSoulsInChecksToggle(Toggle):
+#     """Include saving all souls in each room in Kew Gardens"""
 
-    display_name = "Include Saving Souls in Kew Gardens"
-    default = 1
-    option_true = 1
-    option_false = 0
+#     display_name = "Include Saving Souls in Kew Gardens"
+#     default = 1
+#     option_true = 1
+#     option_false = 0
 
 
 class IncludeChalicesInChecksToggle(Toggle):
@@ -73,22 +73,22 @@ class IncludeChalicesInChecksToggle(Toggle):
     option_false = 0
 
 
-class MonsterSanityToggle(Toggle):
-    """Sets whether to do checks for individual monsters (Doesn't work)"""
-
-    display_name = "MonsterSanity"
-    default = 0
-    option_true = 1
-    option_false = 0
-
-
-class KeySanityToggle(Toggle):
-    """Sets whether to mix keys into the pool (Doesn't work yet. Will add the items, but not the logic)"""
+class KeyItemSanityToggle(Toggle):
+    """Sets whether to mix key items into the pool (Doesn't work yet. Will add the items, but not the logic)"""
 
     display_name = "KeySanity"
-    default = 0
+    default = 1
     option_true = 1
     option_false = 0
+
+
+# class IncludeDankensteinPartsInItemPoolToggle(Toggle):
+#     """Include the dankenstein pieces in the item pool (Arms, Legs, Torso and Bum will need to be found to clear dankenstein)"""
+
+#     display_name = "Include Dankenstein Parts"
+#     default = 0
+#     option_true = 1
+#     option_false = 0
 
 
 class DeathLinkToggle(Toggle):
@@ -104,9 +104,10 @@ class DeathLinkToggle(Toggle):
 class Medievil2Options(PerGameCommonOptions):
     goal: GoalOption
     progression_option: ProgressionOption
-    include_secret_rooms_in_checks: IncludeSecretRoomsInChecks
+    # include_dankenstein_parts: IncludeDankensteinPartsInItemPoolToggle
+    # include_secret_rooms_in_checks: IncludeSecretRoomsInChecks
     include_chalices_in_checks: IncludeChalicesInChecksToggle
+    keyitemsanity: KeyItemSanityToggle
     deathlink: DeathLinkToggle
-    monstersanity: MonsterSanityToggle
-    keysanity: KeySanityToggle
+    # monstersanity: MonsterSanityToggle
     guaranteed_items: GuaranteedItemsOption
