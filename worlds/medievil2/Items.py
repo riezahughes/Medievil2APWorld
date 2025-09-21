@@ -75,8 +75,8 @@ _all_items: List[Medievil2ItemData] = [
     Medievil2ItemData("Ammo: Pistol (50)", 7, Medievil2ItemCategory.WEAPON_AMMO, False),
     Medievil2ItemData("Ammo: Crossbow (30)", 8, Medievil2ItemCategory.WEAPON_AMMO, False),
     Medievil2ItemData("Ammo: Crossbow (50)", 9, Medievil2ItemCategory.WEAPON_AMMO, False),
-    Medievil2ItemData("Ammo: Fire Crossbow (30)", 10, Medievil2ItemCategory.WEAPON_AMMO, False),
-    Medievil2ItemData("Ammo: Fire Crossbow (50)", 11, Medievil2ItemCategory.WEAPON_AMMO, False),
+    Medievil2ItemData("Ammo: Flaming Crossbow (30)", 10, Medievil2ItemCategory.WEAPON_AMMO, False),
+    Medievil2ItemData("Ammo: Flaming Crossbow (50)", 11, Medievil2ItemCategory.WEAPON_AMMO, False),
     Medievil2ItemData("Ammo: Gatling Gun (50)", 12, Medievil2ItemCategory.WEAPON_AMMO, False),
     Medievil2ItemData("Ammo: Gatling Gun (100)", 13, Medievil2ItemCategory.WEAPON_AMMO, False),
     Medievil2ItemData("Ammo: Blunderbuss (30)", 14, Medievil2ItemCategory.WEAPON_AMMO, False),
@@ -91,6 +91,8 @@ _all_items: List[Medievil2ItemData] = [
     Medievil2ItemData("Ammo: Silver Shield (200)", 23, Medievil2ItemCategory.WEAPON_AMMO, False),
     Medievil2ItemData("Ammo: Gold Shield (100)", 24, Medievil2ItemCategory.WEAPON_AMMO, False),
     Medievil2ItemData("Ammo: Gold Shield (300)", 25, Medievil2ItemCategory.WEAPON_AMMO, False),
+    Medievil2ItemData("Ammo: Dan's Armour (50)", 24, Medievil2ItemCategory.WEAPON_AMMO, False),
+    Medievil2ItemData("Ammo: Dan's Armour (100)", 25, Medievil2ItemCategory.WEAPON_AMMO, False),
     # Charge
     Medievil2ItemData("Charge: Lightning", 26, Medievil2ItemCategory.WEAPON_CHARGE, False),
     Medievil2ItemData("Charge: Broadsword", 27, Medievil2ItemCategory.WEAPON_CHARGE, False),
@@ -105,7 +107,7 @@ _all_items: List[Medievil2ItemData] = [
     # Ranged Weapons
     Medievil2ItemData("Pistol", 35, Medievil2ItemCategory.RANGED_WEAPONS, True),
     Medievil2ItemData("Crossbow", 36, Medievil2ItemCategory.RANGED_WEAPONS, True),
-    Medievil2ItemData("Fire Crossbow", 37, Medievil2ItemCategory.RANGED_WEAPONS, True),
+    Medievil2ItemData("Flaming Crossbow", 37, Medievil2ItemCategory.RANGED_WEAPONS, True),
     Medievil2ItemData("Gatling Gun", 38, Medievil2ItemCategory.RANGED_WEAPONS, True),
     Medievil2ItemData("Good Lightning", 39, Medievil2ItemCategory.RANGED_WEAPONS, True),
     Medievil2ItemData("Lightning", 40, Medievil2ItemCategory.RANGED_WEAPONS, True),
