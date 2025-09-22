@@ -11,6 +11,7 @@ from .Items import Medievil2Item, Medievil2ItemCategory, item_dictionary, item_d
 from .Locations import Medievil2Location, Medievil2LocationCategory, location_tables, location_dictionary
 from .Options import Medievil2Options, GoalOptions
 from .VictoryConditions import defeat_demon_victory
+from .Rules import set_vanilla_level_progression
 
 
 class Medievil2Web(WebWorld):
@@ -83,7 +84,7 @@ class Medievil2World(World):
             "Kensington",
             "The Tomb",
             "The Freakshow",
-            "Greenwich Observatory ",
+            "Greenwich Observatory",
             "Greenwich, Naval Academy",
             "Kew Gardens",
             "Dankenstein",
@@ -93,10 +94,10 @@ class Medievil2World(World):
             "Whitechapel",
             "The Sewers",
             "The Time Machine",
-            "The Time Machine, Sewers",
+            "The Time Machine, The Sewers",
             "The Ripper",
             "Cathedral Spires",
-            "Cathedral Spires: The Descent",
+            "Cathedral Spires, The Descent",
             "The Demon",
         ]
 
@@ -118,28 +119,30 @@ class Medievil2World(World):
         # Start of the Game
         create_connection("Menu", "The Museum")
         create_connection("The Museum", "Tyrannosaurus Wrecks")
-        create_connection("The Museum", "Hub")
+        create_connection("Tyrannosaurus Wrecks", "Hub")
 
         # Professors Lab
         create_connection("Hub", "The Museum")
         create_connection("Hub", "Tyrannosaurus Wrecks")
         create_connection("Hub", "Kensington")
-        create_connection("Hub", "The Tomb")
+        create_connection("Kensington", "The Tomb")
         create_connection("Hub", "The Freakshow")
-        create_connection("Hub", "Greenwich Observatory ")
-        create_connection("Hub", "Greenwich, Naval Academy")
+        create_connection("Hub", "Greenwich Observatory")
+        create_connection("Greenwich Observatory", "Greenwich, Naval Academy")
         create_connection("Hub", "Kew Gardens")
         create_connection("Hub", "Dankenstein")
+        create_connection("Dankenstein", "Iron Slugger")
         create_connection("Hub", "Iron Slugger")
         create_connection("Hub", "Wulfrum Hall")
+        create_connection("Wulfrum Hall", "The Count")
         create_connection("Hub", "The Count")
         create_connection("Hub", "Whitechapel")
         create_connection("Hub", "The Sewers")
         create_connection("Hub", "The Time Machine")
-        create_connection("Hub", "The Time Machine, Sewers")
-        create_connection("Hub", "The Ripper")
+        create_connection("The Time Machine", "The Time Machine, The Sewers")
+        create_connection("The Time Machine, The Sewers", "The Ripper")
         create_connection("Hub", "Cathedral Spires")
-        create_connection("Hub", "Cathedral Spires: The Descent")
+        create_connection("Cathedral Spires", "Cathedral Spires, The Descent")
         create_connection("Hub", "The Demon")
 
         # Probably more intricate level progression as you can go from one level to the next on some parts.
@@ -147,13 +150,15 @@ class Medievil2World(World):
     # For each region, add the associated locations retrieved from the corresponding location_table
     def create_region(self, region_name, location_table) -> Region:
         new_region = Region(region_name, self.player, self.multiworld)
-
+        print(region_name)
         for location in location_table:
             # CAN ALTER INDIVIDUAL LOCATIONS TO REMOVE THEM FROM THE POOL HERE
             # if self.options.include_ant_hill_in_checks.value == IncludeAntHillInChecksToggle.option_false and location.name == "Energy Vial: Megwynne Stormbinder - HH":
             #     continue
             # if self.options.include_chalices_in_checks.value == IncludeChalicesInChecksToggle.option_false and location.category == MedievilLocationCategory.CHALICE:
             #     continue
+
+            print(location.name)
             if location.category in self.enabled_location_categories:
                 new_location = Medievil2Location(
                     self.player,
@@ -233,6 +238,7 @@ class Medievil2World(World):
         if self.options.goal.value == GoalOptions.DEFEAT_DEMON:
             self.multiworld.completion_condition[self.player] = lambda state: defeat_demon_victory(self, state)
 
+        set_vanilla_level_progression(self)
         # Map rules
 
         # ITEM SPECIFIC RULES
@@ -287,7 +293,12 @@ class Medievil2World(World):
                 # "include_dankenstein_parts": self.options.include_dankenstein_parts.value,
                 "include_chalices_in_checks": self.options.include_chalices_in_checks.value,
                 "keyitemsanity": self.options.keyitemsanity.value,
+                "traps": self.options.traps.value,
+                "ammo": self.options.ammo.value,
                 "deathlink": self.options.deathlink.value,
+                "break_ammo_limit": self.options.break_ammo_limit.value,
+                "break_percentage_limit": self.options.break_percentage_limit.value,
+                "cheat_menu": self.options.cheat_menu.value,
                 "guaranteed_items": self.options.guaranteed_items.value,
             },
             "seed": self.multiworld.seed_name,  # to verify the server's multiworld

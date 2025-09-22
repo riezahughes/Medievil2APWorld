@@ -12,7 +12,12 @@ class GoalOptions:
 
 class ProgressionOptions:
     VANILLA = 0
-    # RANDOM = 1
+    # OPEN = 1
+
+
+class CheatMenuOptions:
+    OFF = 0
+    ON = 1
 
 
 class GuaranteedItemsOption(ItemDict):
@@ -44,6 +49,7 @@ class ProgressionOption(Choice):
     display_name = "Game Progression Options"
     default = ProgressionOptions.VANILLA
     option_vanilla = ProgressionOptions.VANILLA
+    # option_open = ProgressionOptions.OPEN
 
 
 # class IncludeSecretRoomsInChecks(Toggle):
@@ -91,6 +97,53 @@ class KeyItemSanityToggle(Toggle):
 #     option_false = 0
 
 
+class CheatMenuChoice(Choice):
+    """Sets the cheat menu to be available in the pause menu. This allows level skip, chalice completion and
+    invulnerability. Please note, though. That the chalices are counted via checks as getting the actual number isn't
+    viable at the moment. Sorry!"""
+
+    display_name = "Cheat Menu"
+    default = CheatMenuOptions.OFF
+    option_off = CheatMenuOptions.OFF
+    option_on = CheatMenuOptions.ON
+
+
+class BreakAmmoLimit(Toggle):
+    """Allow weapon ammo to be higher than the default"""
+
+    display_name = "Break Ammo Count Limit"
+    default = 1
+    option_true = 1
+    option_false = 0
+
+
+class BreakPercentageLimit(Toggle):
+    """Allow weapon percentages to be higher than the default"""
+
+    display_name = "Break Weapon Percentage Limit"
+    default = 1
+    option_true = 1
+    option_false = 0
+
+
+class AmmoAndChargeToggle(Toggle):
+    """Allow Ammo and Charge in the pool"""
+
+    display_name = "Ammo and Charge in Item Pool"
+    default = 1
+    option_true = 1
+    option_false = 0
+
+
+class TrapToggle(Toggle):
+    """Allow traps in the pool"""
+
+    display_name = "Traps in Item Pool"
+    default = 1
+    option_true = 1
+    option_false = 0
+
+
 class DeathLinkToggle(Toggle):
     """Sets if you want deathlink or not"""
 
@@ -108,6 +161,10 @@ class Medievil2Options(PerGameCommonOptions):
     # include_secret_rooms_in_checks: IncludeSecretRoomsInChecks
     include_chalices_in_checks: IncludeChalicesInChecksToggle
     keyitemsanity: KeyItemSanityToggle
+    traps: TrapToggle
+    ammo: AmmoAndChargeToggle
     deathlink: DeathLinkToggle
-    # monstersanity: MonsterSanityToggle
+    break_ammo_limit: BreakAmmoLimit
+    break_percentage_limit: BreakPercentageLimit
+    cheat_menu: CheatMenuChoice
     guaranteed_items: GuaranteedItemsOption
