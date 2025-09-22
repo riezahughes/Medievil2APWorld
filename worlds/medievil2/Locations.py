@@ -262,7 +262,7 @@ location_tables = {
         Medievil2LocationData("Gold Coins: Hand Maze Chest Reward 2- KG", "Ammo: Gold Shield (100)", Medievil2LocationCategory.GOLD),
         Medievil2LocationData("Gold Coins: Hand Maze Chest Reward 3 - KG", "Ammo: Gold Shield (100)", Medievil2LocationCategory.GOLD),
         Medievil2LocationData("Winston: Level Start - KG", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
-        Medievil2LocationData("Winston - Infection - KG", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
+        Medievil2LocationData("Winston: Infection - KG", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
         Medievil2LocationData("Chalice: Kew Gardens", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_PICKUP),
         Medievil2LocationData("Cleared: Kew Gardens", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LEVEL_END),
     ],
