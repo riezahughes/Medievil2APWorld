@@ -94,8 +94,10 @@ _all_items: List[Medievil2ItemData] = [
     Medievil2ItemData("Ammo: Dan's Armour (50)", 24, Medievil2ItemCategory.WEAPON_AMMO, False),
     Medievil2ItemData("Ammo: Dan's Armour (100)", 25, Medievil2ItemCategory.WEAPON_AMMO, False),
     # Charge
-    Medievil2ItemData("Charge: Lightning", 26, Medievil2ItemCategory.WEAPON_CHARGE, False),
-    Medievil2ItemData("Charge: Broadsword", 27, Medievil2ItemCategory.WEAPON_CHARGE, False),
+    Medievil2ItemData("Charge: Lightning (30)", 26, Medievil2ItemCategory.WEAPON_CHARGE, False),
+    Medievil2ItemData("Charge: Lightning (50)", 26, Medievil2ItemCategory.WEAPON_CHARGE, False),
+    Medievil2ItemData("Charge: Broadsword (30)", 27, Medievil2ItemCategory.WEAPON_CHARGE, False),
+    Medievil2ItemData("Charge: Broadsword (50)", 27, Medievil2ItemCategory.WEAPON_CHARGE, False),
     # Melee Weapons
     Medievil2ItemData("Small Sword", 28, Medievil2ItemCategory.MELEE_WEAPONS, True),
     Medievil2ItemData("Broad Sword", 29, Medievil2ItemCategory.MELEE_WEAPONS, True),
