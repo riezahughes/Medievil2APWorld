@@ -186,6 +186,7 @@ location_tables = {
         Medievil2LocationData("Gold Coins: Tomb Entrance Top Left - TT", "Ammo: Gold Shield (100)", Medievil2LocationCategory.GOLD),
         Medievil2LocationData("Gold Coins: Hand Area Chest Ground Floor - TT", "Ammo: Gold Shield (100)", Medievil2LocationCategory.GOLD),
         Medievil2LocationData("Gold Coins: Hand Area Chest Upper Floor - TT", "Ammo: Gold Shield (100)", Medievil2LocationCategory.GOLD),
+        Medievil2LocationData("Winston: Entrance - TT", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
         Medievil2LocationData("Cleared: The Tomb", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LEVEL_END),
     ],
     "The Freakshow": [
@@ -236,6 +237,7 @@ location_tables = {
         Medievil2LocationData("Key Item: Bellows - GONA", "Ammo: Gold Shield (100)", Medievil2LocationCategory.KEY_ITEM),
         Medievil2LocationData("Energy Vial: Near Trees - GONA", "Ammo: Gold Shield (100)", Medievil2LocationCategory.ENERGY),
         Medievil2LocationData("Gold Coins: Bag Near Trees - GONA", "Ammo: Gold Shield (100)", Medievil2LocationCategory.GOLD),
+        Medievil2LocationData("Winston: Entrance - GONA", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
         Medievil2LocationData("Cleared: Naval Academy", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LEVEL_END),
     ],
     "Kew Gardens": [
@@ -363,6 +365,7 @@ location_tables = {
         Medievil2LocationData("Book: Grammar Horn - TTM", "Ammo: Gold Shield (100)", Medievil2LocationCategory.BOOK),
         Medievil2LocationData("Book: Moon Exhibit - TTM", "Ammo: Gold Shield (100)", Medievil2LocationCategory.BOOK),
         Medievil2LocationData("Book: The Time Machine", "Ammo: Gold Shield (100)", Medievil2LocationCategory.BOOK),
+        Medievil2LocationData("Winston: Entrance - TTM", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
         Medievil2LocationData("Cleared: The Time Machine", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LEVEL_END),
     ],
     "The Time Machine, The Sewers": [
