@@ -83,7 +83,7 @@ class KeyItemSanityToggle(Toggle):
     """Sets whether to mix key items into the pool (Doesn't work yet. Will add the items, but not the logic)"""
 
     display_name = "KeySanity"
-    default = 1
+    default = 0
     option_true = 1
     option_false = 0
 
