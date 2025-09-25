@@ -163,7 +163,7 @@ _all_items: List[Medievil2ItemData] = [
     Medievil2ItemData("Cannon Ball", 83, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Front Door Key", 84, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Potting Shed Key", 85, Medievil2ItemCategory.KEY_ITEMS, True),
-    Medievil2ItemData("The Depot Key", 86, Medievil2ItemCategory.KEY_ITEMS, True),
+    Medievil2ItemData("Depot Key", 86, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Museum Key", 87, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Dinosaur Key", 88, Medievil2ItemCategory.KEY_ITEMS, True),
     # Traps

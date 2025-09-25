@@ -103,7 +103,8 @@ def set_item_rules(self):
     set_key_blocks(
         self,
         [
-            "Gold Coins: First Hand Room - Chest 1 - TMGold Coins: First Hand Room - Chest 2 - TM",
+            "Gold Coins: First Hand Room - Chest 1 - TM",
+            "Gold Coins: First Hand Room - Chest 2 - TM",
             "Gold Coins: First Hand Room - Chest 3 - TM",
             "Gold Coins: Second Hand Room - Chest Right of Vial - TM",
             "Gold Coins: Second Hand Room - Chest Left of Vial - TM",
@@ -119,9 +120,9 @@ def set_item_rules(self):
 
     # Kensington
 
-    set_key_blocks(self, ["Key Item: Town House Key"], ["Depot Key"])
+    set_key_blocks(self, ["Key Item: Town House Key - KT"], ["Depot Key"])
 
-    set_key_blocks(self, ["Key Item: PocketwatchWinston: Where the Spell was Cast - KTChalice: Kensington - KT"], ["Town House Key"])
+    set_key_blocks(self, ["Key Item: Pocketwatch - KT", "Winston: Where the Spell was Cast - KT", "Chalice: Kensington - KT"], ["Town House Key"])
 
     set_key_blocks(self, ["Winston: Museum Roof - KT"], ["Pocket Watch"])
 
@@ -129,7 +130,7 @@ def set_item_rules(self):
 
     # The Tomb
 
-    set_key_blocks(self, ["Gold Coins: Hand Area Chest Ground Floor - TTGold Coins: Hand Area Chest Upper Floor - TT"], ["Dan Hand"])
+    set_key_blocks(self, ["Gold Coins: Hand Area Chest Ground Floor - TT", "Gold Coins: Hand Area Chest Upper Floor - TT"], ["Dan Hand"])
 
     # The Freakshow
 
@@ -137,21 +138,28 @@ def set_item_rules(self):
 
     # Greenwich Observatory
 
-    set_key_blocks(self, ["Gold Coins: Hand Area Chest 1 - GOGold Coins: Hand Area Chest 2 - GOGold Coins: Hand Area Chest 3 - GO"], ["Dan Hand"])
+    set_key_blocks(
+        self, ["Gold Coins: Hand Area Chest 1 - GO", "Gold Coins: Hand Area Chest 2 - GO", "Gold Coins: Hand Area Chest 3 - GO"], ["Dan Hand"]
+    )
 
     # Naval Academy - bellows are end of level
 
     # Kew Gardens
-    set_key_blocks(self, ["Water Tank Valve"], ["Key Item: Potting Shed Key"])
 
-    set_key_blocks(self, [], ["Hothouse Valve"])
+    # potting shed key for water tank valve
+    # water tank valve give you the pond room valve
+    # hothouse valve gives you the pond room
 
-    set_key_blocks(self, ["Pond Room Valve"], ["Water Tank Valve"])
+    set_key_blocks(self, ["Key Item: Water Tank Valve - KG"], ["Potting Shed Key"])
+
+    set_key_blocks(self, ["Key Item: Pond Room Valve - KG"], ["Water Tank Valve"])
+
+    set_key_blocks(self, ["Key Item: Hothouse Valve - KG"], ["Pond Room Valve"])
 
     set_key_blocks(
         self,
         ["Equipment: Silver Shield in Gauntlet Room - KG", "Gold Coins: Bag in Third Human Room - KG", "Chalice: Kew Gardens"],
-        ["Pond Room Valve"],
+        ["Hothouse Valve"],
     )
 
     set_key_blocks(
@@ -194,7 +202,7 @@ def set_item_rules(self):
 
     set_key_blocks(self, [], ["Beard", "Club Membership Card"])
 
-    set_key_blocks(self, ["Beard"], ["Griffin Shield", "Unicorn Shield"])
+    set_key_blocks(self, ["Key Item: Beard - WC"], ["Griffin Shield", "Unicorn Shield"])
 
     # Sewers - nothing
 
@@ -211,6 +219,6 @@ def set_item_rules(self):
     # The Descent
 
     # need two of these.
-    set_key_blocks(self, ["Golden Cog 2"], ["Golden Cog 1"])
+    set_key_blocks(self, ["Key Item: Golden Cog in Hand Area - CSTD"], ["Golden Cog 1"])
 
     set_key_blocks(self, [], ["Golden Cog 2"])
