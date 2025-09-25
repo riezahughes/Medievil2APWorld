@@ -125,7 +125,6 @@ _all_items: List[Medievil2ItemData] = [
     # Dans Armour
     Medievil2ItemData("Gold Armour", 48, Medievil2ItemCategory.DANS_ARMOUR, True),
     # Skills
-    Medievil2ItemData("Daring Dash", 49, Medievil2ItemCategory.SKILLS, True),
     Medievil2ItemData("Dan Hand", 50, Medievil2ItemCategory.SKILLS, True),
     # Key Items
     Medievil2ItemData("Poster", 51, Medievil2ItemCategory.KEY_ITEMS, True),
@@ -137,7 +136,8 @@ _all_items: List[Medievil2ItemData] = [
     Medievil2ItemData("Torso", 57, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Bellows", 58, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Lost Soul", 59, Medievil2ItemCategory.KEY_ITEMS, True),
-    Medievil2ItemData("Golden Cog", 60, Medievil2ItemCategory.KEY_ITEMS, True),
+    Medievil2ItemData("Golden Cog 1", 60, Medievil2ItemCategory.KEY_ITEMS, True),
+    Medievil2ItemData("Golden Cog 2", 60, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Spell Page", 61, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Griffin Shield", 62, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Unicorn Shield", 63, Medievil2ItemCategory.KEY_ITEMS, True),
@@ -217,7 +217,9 @@ def BuildItemPool(count: int, options) -> List[str]:
             and item_data.category == Medievil2ItemCategory.KEY_ITEMS
         )
         or item_data.category == Medievil2ItemCategory.MELEE_WEAPONS
+        or item_data.category == Medievil2ItemCategory.SHIELDS
         or item_data.category == Medievil2ItemCategory.RANGED_WEAPONS
+        or item_data.category == Medievil2ItemCategory.SKILLS
     ]
 
     for item_name in progression_items:
@@ -234,8 +236,6 @@ def BuildItemPool(count: int, options) -> List[str]:
         or item_data.category == Medievil2ItemCategory.GOLD
         or item_data.category == Medievil2ItemCategory.TRAP
     ]
-
-    print(filler_item_names)
 
     for _ in range(count - len(item_pool_names)):
         if filler_item_names:

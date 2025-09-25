@@ -9,9 +9,9 @@ from worlds.generic.Rules import set_rule, add_rule, add_item_rule
 
 from .Items import Medievil2Item, Medievil2ItemCategory, item_dictionary, item_descriptions, BuildItemPool
 from .Locations import Medievil2Location, Medievil2LocationCategory, location_tables, location_dictionary
-from .Options import Medievil2Options, GoalOptions
+from .Options import Medievil2Options, GoalOptions, KeyItemSanityToggle
 from .VictoryConditions import defeat_demon_victory
-from .Rules import set_vanilla_level_progression
+from .Rules import set_vanilla_level_progression, set_item_rules
 
 
 class Medievil2Web(WebWorld):
@@ -150,7 +150,6 @@ class Medievil2World(World):
     # For each region, add the associated locations retrieved from the corresponding location_table
     def create_region(self, region_name, location_table) -> Region:
         new_region = Region(region_name, self.player, self.multiworld)
-        print(region_name)
         for location in location_table:
             # CAN ALTER INDIVIDUAL LOCATIONS TO REMOVE THEM FROM THE POOL HERE
             # if self.options.include_ant_hill_in_checks.value == IncludeAntHillInChecksToggle.option_false and location.name == "Energy Vial: Megwynne Stormbinder - HH":
@@ -158,7 +157,6 @@ class Medievil2World(World):
             # if self.options.include_chalices_in_checks.value == IncludeChalicesInChecksToggle.option_false and location.category == MedievilLocationCategory.CHALICE:
             #     continue
 
-            print(location.name)
             if location.category in self.enabled_location_categories:
                 new_location = Medievil2Location(
                     self.player,
@@ -239,6 +237,10 @@ class Medievil2World(World):
             self.multiworld.completion_condition[self.player] = lambda state: defeat_demon_victory(self, state)
 
         set_vanilla_level_progression(self)
+
+        if self.options.keyitemsanity.value == KeyItemSanityToggle.option_true:
+            set_item_rules(self)
+
         # Map rules
 
         # ITEM SPECIFIC RULES
