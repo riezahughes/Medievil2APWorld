@@ -226,6 +226,10 @@ def BuildItemPool(count: int, options) -> List[str]:
         if item_name not in item_pool_names and len(item_pool_names) < count:
             item_pool_names.append(item_name)
 
+    if options.life_bottles.value >= 1:
+        for x in range(options.life_bottles.value - 1):
+            item_pool_names.append("Life Bottle")
+
     # Populate the rest of the pool with random filler items
     filler_item_names = [
         item_data.name

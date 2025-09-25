@@ -1,6 +1,6 @@
 import typing
 from dataclasses import dataclass
-from Options import Toggle, DefaultOnToggle, Option, Range, Choice, ItemDict, DeathLink, PerGameCommonOptions
+from Options import Toggle, DefaultOnToggle, Option, Range, Choice, ItemDict, DeathLink, PerGameCommonOptions, NumericOption
 
 
 class GoalOptions:
@@ -126,6 +126,15 @@ class BreakPercentageLimit(Toggle):
     option_false = 0
 
 
+class LifeBottlesInPool(Range):
+    """Set how many life bottles you want in the pool"""
+
+    display_name = "Life Bottles in Pool"
+    range_start = 0
+    range_end = 10
+    default = 8
+
+
 class AmmoAndChargeToggle(Toggle):
     """Allow Ammo and Charge in the pool"""
 
@@ -160,6 +169,7 @@ class Medievil2Options(PerGameCommonOptions):
     # include_dankenstein_parts: IncludeDankensteinPartsInItemPoolToggle
     # include_secret_rooms_in_checks: IncludeSecretRoomsInChecks
     include_chalices_in_checks: IncludeChalicesInChecksToggle
+    life_bottles: LifeBottlesInPool
     keyitemsanity: KeyItemSanityToggle
     traps: TrapToggle
     ammo: AmmoAndChargeToggle

@@ -294,6 +294,7 @@ class Medievil2World(World):
                 "progression_option": self.options.progression_option.value,
                 # "include_dankenstein_parts": self.options.include_dankenstein_parts.value,
                 "include_chalices_in_checks": self.options.include_chalices_in_checks.value,
+                "life_bottles": self.options.life_bottles.value,
                 "keyitemsanity": self.options.keyitemsanity.value,
                 "traps": self.options.traps.value,
                 "ammo": self.options.ammo.value,
