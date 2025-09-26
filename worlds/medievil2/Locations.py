@@ -105,7 +105,7 @@ location_tables = {
         Medievil2LocationData("Chalice Reward: Crossbow", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_REWARD),
         Medievil2LocationData("Chalice Reward: Axe", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_REWARD),
         Medievil2LocationData("Chalice Reward: Bombs", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_REWARD),
-        Medievil2LocationData("Chalice Reward: Broad Sword", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_REWARD),
+        Medievil2LocationData("Chalice Reward: Broadsword", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_REWARD),
         Medievil2LocationData("Chalice Reward: Lightning", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_REWARD),
         Medievil2LocationData("Chalice Reward: Blunderbuss", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_REWARD),
         Medievil2LocationData("Chalice Reward: Magic Sword", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_REWARD),

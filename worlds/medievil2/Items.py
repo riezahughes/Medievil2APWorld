@@ -63,9 +63,9 @@ key_item_names = {}
 
 _all_items: List[Medievil2ItemData] = [
     # Gold
-    Medievil2ItemData("Gold: (50)", 0, Medievil2ItemCategory.GOLD, False),
-    Medievil2ItemData("Gold: (100)", 1, Medievil2ItemCategory.GOLD, False),
-    Medievil2ItemData("Gold: (200)", 2, Medievil2ItemCategory.GOLD, False),
+    Medievil2ItemData("Gold Coins: (50)", 0, Medievil2ItemCategory.GOLD, False),
+    Medievil2ItemData("Gold Coins: (100)", 1, Medievil2ItemCategory.GOLD, False),
+    Medievil2ItemData("Gold Coins: (200)", 2, Medievil2ItemCategory.GOLD, False),
     # Energy
     Medievil2ItemData("Energy: (50)", 3, Medievil2ItemCategory.ENERGY, False),
     Medievil2ItemData("Energy: (100)", 4, Medievil2ItemCategory.ENERGY, False),
