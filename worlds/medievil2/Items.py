@@ -100,7 +100,7 @@ _all_items: List[Medievil2ItemData] = [
     Medievil2ItemData("Charge: Broadsword (50)", 27, Medievil2ItemCategory.WEAPON_CHARGE, False),
     # Melee Weapons
     Medievil2ItemData("Small Sword", 28, Medievil2ItemCategory.MELEE_WEAPONS, True),
-    Medievil2ItemData("Broad Sword", 29, Medievil2ItemCategory.MELEE_WEAPONS, True),
+    Medievil2ItemData("Broadsword", 29, Medievil2ItemCategory.MELEE_WEAPONS, True),
     Medievil2ItemData("Magic Sword", 30, Medievil2ItemCategory.MELEE_WEAPONS, True),
     Medievil2ItemData("Cane Stick", 31, Medievil2ItemCategory.MELEE_WEAPONS, True),
     Medievil2ItemData("Hammer", 32, Medievil2ItemCategory.MELEE_WEAPONS, True),
