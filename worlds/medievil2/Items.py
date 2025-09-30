@@ -105,7 +105,6 @@ _all_items: List[Medievil2ItemData] = [
     Medievil2ItemData("Cane Stick", 31, Medievil2ItemCategory.MELEE_WEAPONS, True),
     Medievil2ItemData("Hammer", 32, Medievil2ItemCategory.MELEE_WEAPONS, True),
     Medievil2ItemData("Axe", 33, Medievil2ItemCategory.MELEE_WEAPONS, True),
-    Medievil2ItemData("Torch", 34, Medievil2ItemCategory.MELEE_WEAPONS, True),
     # Ranged Weapons
     Medievil2ItemData("Pistol", 35, Medievil2ItemCategory.RANGED_WEAPONS, True),
     Medievil2ItemData("Crossbow", 36, Medievil2ItemCategory.RANGED_WEAPONS, True),
@@ -117,7 +116,7 @@ _all_items: List[Medievil2ItemData] = [
     Medievil2ItemData("Bombs", 42, Medievil2ItemCategory.RANGED_WEAPONS, True),
     Medievil2ItemData("Chicken Drumsticks", 43, Medievil2ItemCategory.RANGED_WEAPONS, True),
     # Shields
-    Medievil2ItemData("Bronze Shield", 44, Medievil2ItemCategory.SHIELDS, True),
+    Medievil2ItemData("Copper Shield", 44, Medievil2ItemCategory.SHIELDS, True),
     Medievil2ItemData("Silver Shield", 45, Medievil2ItemCategory.SHIELDS, True),
     Medievil2ItemData("Gold Shield", 46, Medievil2ItemCategory.SHIELDS, True),
     # Life Bottles
@@ -166,11 +165,12 @@ _all_items: List[Medievil2ItemData] = [
     Medievil2ItemData("Depot Key", 86, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Museum Key", 87, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Dinosaur Key", 88, Medievil2ItemCategory.KEY_ITEMS, True),
+    Medievil2ItemData("Torch", 89, Medievil2ItemCategory.KEY_ITEMS, True),
     # Traps
-    Medievil2ItemData("Trap: Heavy Dan", 89, Medievil2ItemCategory.TRAP, False),
-    Medievil2ItemData("Trap: Light Dan", 90, Medievil2ItemCategory.TRAP, False),
-    Medievil2ItemData("Trap: Darkness", 91, Medievil2ItemCategory.TRAP, False),
-    Medievil2ItemData("Trap: Hudless", 92, Medievil2ItemCategory.TRAP, False),
+    Medievil2ItemData("Trap: Heavy Dan", 90, Medievil2ItemCategory.TRAP, False),
+    Medievil2ItemData("Trap: Light Dan", 91, Medievil2ItemCategory.TRAP, False),
+    Medievil2ItemData("Trap: Darkness", 92, Medievil2ItemCategory.TRAP, False),
+    Medievil2ItemData("Trap: Hudless", 93, Medievil2ItemCategory.TRAP, False),
 ]
 # Convert raw list of tuples into MedievilItemData NamedTuple instances
 # _all_items = [Medievil2ItemData(row[0], row[1], row[2], row[3]) for row in _all_items]
