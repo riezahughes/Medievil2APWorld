@@ -238,6 +238,7 @@ location_tables = {
         Medievil2LocationData("Energy Vial: Near Trees - GONA", "Ammo: Gold Shield (100)", Medievil2LocationCategory.ENERGY),
         Medievil2LocationData("Gold Coins: Bag Near Trees - GONA", "Ammo: Gold Shield (100)", Medievil2LocationCategory.GOLD),
         Medievil2LocationData("Winston: Entrance - GONA", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
+        Medievil2LocationData("Winston: Balloon - GONA", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
         Medievil2LocationData("Cleared: Naval Academy", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LEVEL_END),
     ],
     "Kew Gardens": [
@@ -246,6 +247,7 @@ location_tables = {
         Medievil2LocationData("Key Item: Pond Room Valve - KG", "Ammo: Gold Shield (100)", Medievil2LocationCategory.KEY_ITEM),
         Medievil2LocationData("Key Item: Hothouse Valve - KG", "Ammo: Gold Shield (100)", Medievil2LocationCategory.KEY_ITEM),
         Medievil2LocationData("Life Bottle: Kew Gardens", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LIFE_BOTTLE),
+        Medievil2LocationData("Life Bottle: Kew Gardens 2", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LIFE_BOTTLE),
         Medievil2LocationData("Equipment: Silver Shield in Gauntlet Room - KG", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WEAPON),
         Medievil2LocationData("Energy Vial: Behind Fence Vial 1 - KG", "Ammo: Gold Shield (100)", Medievil2LocationCategory.ENERGY),
         Medievil2LocationData("Energy Vial: Behind Fence Vial 2 - KG", "Ammo: Gold Shield (100)", Medievil2LocationCategory.ENERGY),
