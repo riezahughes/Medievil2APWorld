@@ -127,12 +127,13 @@ _all_items: List[Medievil2ItemData] = [
     Medievil2ItemData("Dan Hand", 50, Medievil2ItemCategory.SKILLS, True),
     # Key Items
     Medievil2ItemData("Poster", 51, Medievil2ItemCategory.KEY_ITEMS, True),
-    Medievil2ItemData("Left Leg", 52, Medievil2ItemCategory.KEY_ITEMS, True),
-    Medievil2ItemData("Right Leg", 53, Medievil2ItemCategory.KEY_ITEMS, True),
-    Medievil2ItemData("Left Arm", 54, Medievil2ItemCategory.KEY_ITEMS, True),
-    Medievil2ItemData("Right Arm", 55, Medievil2ItemCategory.KEY_ITEMS, True),
-    Medievil2ItemData("Bum", 56, Medievil2ItemCategory.KEY_ITEMS, True),
-    Medievil2ItemData("Torso", 57, Medievil2ItemCategory.KEY_ITEMS, True),
+    # due to the way the level works, i don't htink these will go well as key items.
+    # Medievil2ItemData("Left Leg", 52, Medievil2ItemCategory.KEY_ITEMS, True),
+    # Medievil2ItemData("Right Leg", 53, Medievil2ItemCategory.KEY_ITEMS, True),
+    # Medievil2ItemData("Left Arm", 54, Medievil2ItemCategory.KEY_ITEMS, True),
+    # Medievil2ItemData("Right Arm", 55, Medievil2ItemCategory.KEY_ITEMS, True),
+    # Medievil2ItemData("Bum", 56, Medievil2ItemCategory.KEY_ITEMS, True),
+    # Medievil2ItemData("Torso", 57, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Bellows", 58, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Lost Soul", 59, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Golden Cog 1", 60, Medievil2ItemCategory.KEY_ITEMS, True),
@@ -229,6 +230,10 @@ def BuildItemPool(count: int, options) -> List[str]:
     if options.life_bottles.value >= 1:
         for x in range(options.life_bottles.value - 1):
             item_pool_names.append("Life Bottle")
+
+    if options.keyitemsanity.value == KeyItemSanityToggle.option_true:
+        for x in range(11):
+            item_pool_names.append("Lost Soul")
 
     # Populate the rest of the pool with random filler items
     filler_item_names = [

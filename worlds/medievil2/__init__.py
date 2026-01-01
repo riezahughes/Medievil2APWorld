@@ -9,9 +9,9 @@ from worlds.generic.Rules import set_rule, add_rule, add_item_rule
 
 from .Items import Medievil2Item, Medievil2ItemCategory, item_dictionary, item_descriptions, BuildItemPool
 from .Locations import Medievil2Location, Medievil2LocationCategory, location_tables, location_dictionary
-from .Options import Medievil2Options, GoalOptions, KeyItemSanityToggle
+from .Options import Medievil2Options, GoalOptions, KeyItemSanityToggle, IncludeChalicesInChecksToggle
 from .VictoryConditions import defeat_demon_victory
-from .Rules import set_vanilla_level_progression, set_item_rules
+from .Rules import set_vanilla_level_progression, set_item_rules, set_keyitemsanity_progression, set_chalice_vanilla_rules
 
 
 class Medievil2Web(WebWorld):
@@ -126,6 +126,7 @@ class Medievil2World(World):
         create_connection("Hub", "Tyrannosaurus Wrecks")
         create_connection("Hub", "Kensington")
         create_connection("Kensington", "The Tomb")
+        create_connection("The Tomb", "Hub")
         create_connection("Hub", "The Freakshow")
         create_connection("Hub", "Greenwich Observatory")
         create_connection("Greenwich Observatory", "Greenwich, Naval Academy")
@@ -143,6 +144,7 @@ class Medievil2World(World):
         create_connection("The Time Machine, The Sewers", "The Ripper")
         create_connection("Hub", "Cathedral Spires")
         create_connection("Cathedral Spires", "Cathedral Spires, The Descent")
+        create_connection("Cathedral Spires, The Descent", "The Demon")
         create_connection("Hub", "The Demon")
 
         # Probably more intricate level progression as you can go from one level to the next on some parts.
@@ -152,10 +154,10 @@ class Medievil2World(World):
         new_region = Region(region_name, self.player, self.multiworld)
         for location in location_table:
             # CAN ALTER INDIVIDUAL LOCATIONS TO REMOVE THEM FROM THE POOL HERE
-            # if self.options.include_ant_hill_in_checks.value == IncludeAntHillInChecksToggle.option_false and location.name == "Energy Vial: Megwynne Stormbinder - HH":
-            #     continue
-            # if self.options.include_chalices_in_checks.value == IncludeChalicesInChecksToggle.option_false and location.category == MedievilLocationCategory.CHALICE:
-            #     continue
+            if self.options.include_chalices_in_checks.value == IncludeChalicesInChecksToggle.option_false and (
+                location.category == Medievil2LocationCategory.CHALICE_REWARD or location.category == Medievil2LocationCategory.CHALICE_PICKUP
+            ):
+                continue
 
             if location.category in self.enabled_location_categories:
                 new_location = Medievil2Location(
@@ -236,10 +238,16 @@ class Medievil2World(World):
         if self.options.goal.value == GoalOptions.DEFEAT_DEMON:
             self.multiworld.completion_condition[self.player] = lambda state: defeat_demon_victory(self, state)
 
-        set_vanilla_level_progression(self)
+        if self.options.keyitemsanity.value == KeyItemSanityToggle.option_true:
+            set_keyitemsanity_progression(self)
+        else:
+            set_vanilla_level_progression(self)
 
         if self.options.keyitemsanity.value == KeyItemSanityToggle.option_true:
             set_item_rules(self)
+
+        if self.options.include_chalices_in_checks.value == IncludeChalicesInChecksToggle.option_true:
+            set_chalice_vanilla_rules(self)
 
         # Map rules
 

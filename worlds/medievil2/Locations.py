@@ -175,7 +175,7 @@ location_tables = {
         Medievil2LocationData("Winston: Pushing and Pulling - KT", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
         Medievil2LocationData("Winston: Where the Spell was Cast - KT", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
         Medievil2LocationData("Winston: Museum Roof - KT", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
-        Medievil2LocationData("Chalice: Kensington - KT", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_PICKUP),
+        Medievil2LocationData("Chalice: Kensington", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_PICKUP),
         Medievil2LocationData("Cleared: Kensington", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LEVEL_END),
     ],
     "The Tomb": [
@@ -211,7 +211,7 @@ location_tables = {
         Medievil2LocationData("Winston: Entrance - TF", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
         Medievil2LocationData("Winston: Trampoline - TF", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
         Medievil2LocationData("Winston: Elephant Army - TF", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
-        Medievil2LocationData("Chalice: The Freakshow - TF", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_PICKUP),
+        Medievil2LocationData("Chalice: The Freakshow", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_PICKUP),
         Medievil2LocationData("Cleared: The Freakshow", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LEVEL_END),
     ],
     "Greenwich Observatory": [
@@ -230,7 +230,7 @@ location_tables = {
         Medievil2LocationData("Winston: Close To Ladder - GO", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
         Medievil2LocationData("Winston: Lever Puzzle - GO", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
         Medievil2LocationData("Winston: Once Through This Door - GO", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
-        Medievil2LocationData("Chalice: Greenwhich Observatory", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_PICKUP),
+        Medievil2LocationData("Chalice: Greenwich Observatory", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_PICKUP),
         Medievil2LocationData("Cleared: Greenwich Observatory", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LEVEL_END),
     ],
     "Greenwich, Naval Academy": [
@@ -284,7 +284,7 @@ location_tables = {
         Medievil2LocationData("Gold Coins: Hand Area Chest 2 - DK", "Ammo: Gold Shield (100)", Medievil2LocationCategory.GOLD),
         Medievil2LocationData("Book: Reanimation - DK", "Ammo: Gold Shield (100)", Medievil2LocationCategory.BOOK),
         Medievil2LocationData("Winston: Save Point - DK", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
-        Medievil2LocationData("Chalice: Dankenstein - DK", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_PICKUP),
+        Medievil2LocationData("Chalice: Dankenstein", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_PICKUP),
         Medievil2LocationData("Cleared: Dankenstein", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LEVEL_END),
     ],
     # Boss Fight
@@ -334,7 +334,7 @@ location_tables = {
         Medievil2LocationData("Gold Coins: Chest Inside Club - WC", "Ammo: Gold Shield (100)", Medievil2LocationCategory.GOLD),
         Medievil2LocationData("Book: Isibod Brunel - WC", "Ammo: Gold Shield (100)", Medievil2LocationCategory.BOOK),
         Medievil2LocationData("Winston: Kiya Last Seen - WC", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
-        Medievil2LocationData("Chalice: Whitechapel - WC", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_PICKUP),
+        Medievil2LocationData("Chalice: Whitechapel", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_PICKUP),
         Medievil2LocationData("Cleared: Whitechapel", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LEVEL_END),
     ],
     "The Sewers": [
@@ -356,7 +356,7 @@ location_tables = {
         Medievil2LocationData("Gold Coins: Reward Chest 2 - TS", "Ammo: Gold Shield (100)", Medievil2LocationCategory.GOLD),
         Medievil2LocationData("Winston: Save Point - TS", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
         Medievil2LocationData("Winston: Something Really Interesting - TS", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
-        Medievil2LocationData("Chalice: Sewers", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_PICKUP),
+        Medievil2LocationData("Chalice: The Sewers", "Ammo: Gold Shield (100)", Medievil2LocationCategory.CHALICE_PICKUP),
         Medievil2LocationData("Cleared: The Sewers", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LEVEL_END),
     ],
     "The Time Machine": [
@@ -382,6 +382,7 @@ location_tables = {
     # Boss Fight
     "The Ripper": [
         Medievil2LocationData("Winston: Entrance - TR", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
+        Medievil2LocationData("Chalice: The Ripper", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LEVEL_END),
         Medievil2LocationData("Cleared: The Ripper", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LEVEL_END),
     ],
     "Cathedral Spires": [
