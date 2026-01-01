@@ -317,6 +317,12 @@ def set_item_rules(self):
         ["Elephant Key 1", "Elephant Key 2"],
     )
 
+    set_key_blocks(
+        self,
+        ["Gold Coins: Hand Area Chest - TF", "Gold Coins: Hand Area Hidden Chest Left - TF", "Gold Coins: Hand Area Hidden Chest Right - TF"],
+        ["Dan Hand"],
+    )
+
     # Greenwich Observatory
 
     set_key_blocks(
