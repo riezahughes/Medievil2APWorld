@@ -12,7 +12,7 @@ class GoalOptions:
 
 class ProgressionOptions:
     VANILLA = 0
-    # OPEN = 1
+    OPEN = 1
 
 
 class CheatMenuOptions:
@@ -49,7 +49,7 @@ class ProgressionOption(Choice):
     display_name = "Game Progression Options"
     default = ProgressionOptions.VANILLA
     option_vanilla = ProgressionOptions.VANILLA
-    # option_open = ProgressionOptions.OPEN
+    option_open = ProgressionOptions.OPEN
 
 
 # class IncludeSecretRoomsInChecks(Toggle):
