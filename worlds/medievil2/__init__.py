@@ -9,9 +9,9 @@ from worlds.generic.Rules import set_rule, add_rule, add_item_rule
 
 from .Items import Medievil2Item, Medievil2ItemCategory, item_dictionary, item_descriptions, BuildItemPool
 from .Locations import Medievil2Location, Medievil2LocationCategory, location_tables, location_dictionary
-from .Options import Medievil2Options, GoalOptions, KeyItemSanityToggle, IncludeChalicesInChecksToggle
+from .Options import Medievil2Options, GoalOptions, KeyItemSanityToggle, IncludeChalicesInChecksToggle, ProgressionOptions, ProgressionOption
 from .VictoryConditions import defeat_demon_victory
-from .Rules import set_vanilla_level_progression, set_item_rules, set_keyitemsanity_progression, set_chalice_vanilla_rules
+from .Rules import set_vanilla_level_progression, set_item_rules, set_keyitemsanity_progression, set_chalice_vanilla_rules, set_open_world_progression
 
 
 class Medievil2Web(WebWorld):
@@ -240,6 +240,9 @@ class Medievil2World(World):
 
         if self.options.keyitemsanity.value == KeyItemSanityToggle.option_true:
             set_keyitemsanity_progression(self)
+
+        if self.options.progression_option.value == ProgressionOptions.OPEN:
+            set_open_world_progression(self)
         else:
             set_vanilla_level_progression(self)
 

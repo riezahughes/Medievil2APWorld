@@ -116,6 +116,23 @@ def set_vanilla_level_progression(self):
     set_rule(self.get_entrance("Hub -> The Demon"), lambda state: is_level_cleared(self, "Cathedral Spires, The Descent", state))
 
 
+def set_open_world_progression(self):
+    set_rule(self.get_entrance("Hub -> The Museum"), lambda state: is_level_cleared(self, "Menu", state))
+    set_rule(self.get_entrance("The Museum -> Tyrannosaurus Wrecks"), lambda state: is_level_cleared(self, "The Museum", state))
+    set_rule(self.get_entrance("Tyrannosaurus Wrecks -> Hub"), lambda state: is_level_cleared(self, "Tyrannosaurus Wrecks", state))
+    set_rule(self.get_entrance("Kensington -> The Tomb"), lambda state: is_level_cleared(self, "Kensington", state))
+    set_rule(
+        self.get_entrance("Greenwich Observatory -> Greenwich, Naval Academy"), lambda state: is_level_cleared(self, "Greenwich Observatory", state)
+    )
+    set_rule(self.get_entrance("Dankenstein -> Iron Slugger"), lambda state: is_level_cleared(self, "Dankenstein", state))
+    set_rule(self.get_entrance("Wulfrum Hall -> The Count"), lambda state: is_level_cleared(self, "Wulfrum Hall", state))
+    set_rule(self.get_entrance("The Time Machine -> The Time Machine, The Sewers"), lambda state: is_level_cleared(self, "The Time Machine", state))
+    set_rule(
+        self.get_entrance("The Time Machine, The Sewers -> The Ripper"), lambda state: is_level_cleared(self, "The Time Machine, The Sewers", state)
+    )
+    set_rule(self.get_entrance("Cathedral Spires -> Cathedral Spires, The Descent"), lambda state: is_level_cleared(self, "Cathedral Spires", state))
+
+
 def set_keyitemsanity_progression(self):
     set_rule(self.get_entrance("Hub -> The Museum"), lambda state: is_level_cleared(self, "Menu", state))
     set_rule(
