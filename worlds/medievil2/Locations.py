@@ -363,6 +363,7 @@ location_tables = {
         Medievil2LocationData("Key Item: Time Machine Piece - Planetarium - TTM", "Ammo: Gold Shield (100)", Medievil2LocationCategory.KEY_ITEM),
         Medievil2LocationData("Key Item: Time Machine Piece - Grammar Horn - TTM", "Ammo: Gold Shield (100)", Medievil2LocationCategory.KEY_ITEM),
         Medievil2LocationData("Key Item: Time Machine Piece - Moon Exhibit - TTM", "Ammo: Gold Shield (100)", Medievil2LocationCategory.KEY_ITEM),
+        Medievil2LocationData("Gold Coins: Chest Behind Right Lion Statue - TTM", "Ammo: Gold Shield (100)", Medievil2LocationCategory.KEY_ITEM),
         Medievil2LocationData("Book: Space Beacon - TTM", "Ammo: Gold Shield (100)", Medievil2LocationCategory.BOOK),
         Medievil2LocationData("Book: Grammar Horn - TTM", "Ammo: Gold Shield (100)", Medievil2LocationCategory.BOOK),
         Medievil2LocationData("Book: Moon Exhibit - TTM", "Ammo: Gold Shield (100)", Medievil2LocationCategory.BOOK),

@@ -80,7 +80,7 @@ class IncludeChalicesInChecksToggle(Toggle):
 
 
 class KeyItemSanityToggle(Toggle):
-    """Sets whether to mix key items into the pool (Doesn't work yet. Will add the items, but not the logic)"""
+    """Sets whether to mix key items into the pool"""
 
     display_name = "KeySanity"
     default = 0
@@ -145,7 +145,7 @@ class AmmoAndChargeToggle(Toggle):
 
 
 class TrapToggle(Toggle):
-    """Allow traps in the pool"""
+    """Allow traps in the pool (not all traps are working yet)"""
 
     display_name = "Traps in Item Pool"
     default = 1
@@ -154,7 +154,7 @@ class TrapToggle(Toggle):
 
 
 class DeathLinkToggle(Toggle):
-    """Sets if you want deathlink or not"""
+    """Sets if you want deathlink or not (not working yet)"""
 
     display_name = "Death Link"
     default = 0
