@@ -44,7 +44,8 @@ class GoalOption(Choice):
 class ProgressionOption(Choice):
     """Lets users choose how they wish to progress
     Vanilla - Plays the game like normal
-    (Will only do Vanilla for now)"""
+    Open - All areas are accessible from the start
+    """
 
     display_name = "Game Progression Options"
     default = ProgressionOptions.VANILLA

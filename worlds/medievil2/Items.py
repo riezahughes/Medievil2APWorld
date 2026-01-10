@@ -2,7 +2,7 @@ from enum import IntEnum
 from typing import NamedTuple, List, Optional
 import random
 from BaseClasses import Item, ItemClassification
-from .Options import KeyItemSanityToggle
+from .Options import KeyItemSanityToggle, TrapToggle
 
 
 class Medievil2ItemCategory(IntEnum):
@@ -243,7 +243,7 @@ def BuildItemPool(count: int, options) -> List[str]:
         or item_data.category == Medievil2ItemCategory.WEAPON_AMMO
         or item_data.category == Medievil2ItemCategory.ENERGY
         or item_data.category == Medievil2ItemCategory.GOLD
-        or item_data.category == Medievil2ItemCategory.TRAP
+        or (item_data.category == Medievil2ItemCategory.TRAP and options.traps.value == TrapToggle.option_true)
     ]
 
     for _ in range(count - len(item_pool_names)):
