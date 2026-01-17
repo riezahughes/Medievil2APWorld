@@ -89,6 +89,24 @@ class KeyItemSanityToggle(Toggle):
     option_false = 0
 
 
+class MoveSanityToggle(Toggle):
+    """Puts dans traversal moves into the pool (NOT IMPLIMENTED)"""
+
+    display_name = "MoveSanity"
+    default = 0
+    option_true = 1
+    option_false = 0
+
+
+class ShopSanityToggle(Toggle):
+    """Puts AP items in the spiv (NOT IMPLIMENTED)"""
+
+    display_name = "ShopSanity"
+    default = 0
+    option_true = 1
+    option_false = 0
+
+
 # class IncludeDankensteinPartsInItemPoolToggle(Toggle):
 #     """Include the dankenstein pieces in the item pool (Arms, Legs, Torso and Bum will need to be found to clear dankenstein)"""
 
@@ -136,6 +154,18 @@ class LifeBottlesInPool(Range):
     default = 8
 
 
+class AntidoteInPoolToggle(Toggle):
+    """Sets how to deal with the Kensington Antidote Drops
+    True: Adds the antidote to the pool. It will always be there in kensington at 100%
+    False: Removes the antidote from the pool and just works like the vanilla game.
+    """
+
+    display_name = "Kensington Antidote in Item Pool"
+    default = 1
+    option_true = 1
+    option_false = 0
+
+
 class AmmoAndChargeToggle(Toggle):
     """Allow Ammo and Charge in the pool"""
 
@@ -172,9 +202,12 @@ class Medievil2Options(PerGameCommonOptions):
     include_chalices_in_checks: IncludeChalicesInChecksToggle
     life_bottles: LifeBottlesInPool
     keyitemsanity: KeyItemSanityToggle
+    movesanity: MoveSanityToggle
+    shopsanity: ShopSanityToggle
     traps: TrapToggle
     ammo: AmmoAndChargeToggle
     deathlink: DeathLinkToggle
+    antidote_in_pool: AntidoteInPoolToggle
     break_ammo_limit: BreakAmmoLimit
     break_percentage_limit: BreakPercentageLimit
     cheat_menu: CheatMenuChoice

@@ -9,7 +9,15 @@ from worlds.generic.Rules import set_rule, add_rule, add_item_rule
 
 from .Items import Medievil2Item, Medievil2ItemCategory, item_dictionary, item_descriptions, BuildItemPool
 from .Locations import Medievil2Location, Medievil2LocationCategory, location_tables, location_dictionary
-from .Options import Medievil2Options, GoalOptions, KeyItemSanityToggle, IncludeChalicesInChecksToggle, ProgressionOptions, ProgressionOption
+from .Options import (
+    Medievil2Options,
+    GoalOptions,
+    KeyItemSanityToggle,
+    IncludeChalicesInChecksToggle,
+    ProgressionOptions,
+    ProgressionOption,
+    AntidoteInPoolToggle,
+)
 from .VictoryConditions import defeat_demon_victory
 from .Rules import set_vanilla_level_progression, set_item_rules, set_keyitemsanity_progression, set_chalice_vanilla_rules, set_open_world_progression
 
@@ -307,9 +315,12 @@ class Medievil2World(World):
                 "include_chalices_in_checks": self.options.include_chalices_in_checks.value,
                 "life_bottles": self.options.life_bottles.value,
                 "keyitemsanity": self.options.keyitemsanity.value,
+                "movesanity": self.options.movesanity.value,
+                "shopsanity": self.options.shopsanity.value,
                 "traps": self.options.traps.value,
                 "ammo": self.options.ammo.value,
                 "deathlink": self.options.deathlink.value,
+                "antidote_in_pool": self.options.antidote_in_pool.value,
                 "break_ammo_limit": self.options.break_ammo_limit.value,
                 "break_percentage_limit": self.options.break_percentage_limit.value,
                 "cheat_menu": self.options.cheat_menu.value,

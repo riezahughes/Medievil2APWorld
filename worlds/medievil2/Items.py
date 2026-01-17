@@ -2,7 +2,7 @@ from enum import IntEnum
 from typing import NamedTuple, List, Optional
 import random
 from BaseClasses import Item, ItemClassification
-from .Options import KeyItemSanityToggle, TrapToggle
+from .Options import KeyItemSanityToggle, TrapToggle, AntidoteInPoolToggle
 
 
 class Medievil2ItemCategory(IntEnum):
@@ -215,6 +215,13 @@ def BuildItemPool(count: int, options) -> List[str]:
         if (
             hasattr(options, "keyitemsanity")
             and options.keyitemsanity.value == KeyItemSanityToggle.option_true
+            and item_data != "Antidote"
+            and item_data.category == Medievil2ItemCategory.KEY_ITEMS
+        )
+        or (
+            hasattr(options, "antidote_in_pool")
+            and options.antidote_in_pool.value == AntidoteInPoolToggle.option_true
+            and item_data == "Antidote"
             and item_data.category == Medievil2ItemCategory.KEY_ITEMS
         )
         or item_data.category == Medievil2ItemCategory.MELEE_WEAPONS
