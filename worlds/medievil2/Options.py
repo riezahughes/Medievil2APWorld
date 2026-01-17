@@ -156,8 +156,10 @@ class LifeBottlesInPool(Range):
 
 class AntidoteInPoolToggle(Toggle):
     """Sets how to deal with the Kensington Antidote Drops
-    True: Adds the antidote to the pool. It will always be there in kensington at 100%
+    Note: This will not turn on unless keysanity is TRUE
+
     False: Removes the antidote from the pool and just works like the vanilla game.
+    True: Adds the antidote to the pool. It will always be there in Kew Gardens at 100%
     """
 
     display_name = "Kensington Antidote in Item Pool"
@@ -202,12 +204,12 @@ class Medievil2Options(PerGameCommonOptions):
     include_chalices_in_checks: IncludeChalicesInChecksToggle
     life_bottles: LifeBottlesInPool
     keyitemsanity: KeyItemSanityToggle
+    antidote_in_pool: AntidoteInPoolToggle
     movesanity: MoveSanityToggle
     shopsanity: ShopSanityToggle
     traps: TrapToggle
     ammo: AmmoAndChargeToggle
     deathlink: DeathLinkToggle
-    antidote_in_pool: AntidoteInPoolToggle
     break_ammo_limit: BreakAmmoLimit
     break_percentage_limit: BreakPercentageLimit
     cheat_menu: CheatMenuChoice
