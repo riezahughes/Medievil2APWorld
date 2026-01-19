@@ -158,7 +158,7 @@ _all_items: List[Medievil2ItemData] = [
     Medievil2ItemData("Time Stone", 78, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Antidote", 79, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Pond Room Valve", 80, Medievil2ItemCategory.KEY_ITEMS, True),
-    Medievil2ItemData("Hot House Valve", 81, Medievil2ItemCategory.KEY_ITEMS, True),
+    Medievil2ItemData("Hothouse Valve", 81, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Water Tank Valve", 82, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Cannon Ball", 83, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Front Door Key", 84, Medievil2ItemCategory.KEY_ITEMS, True),
