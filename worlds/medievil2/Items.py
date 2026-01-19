@@ -2,7 +2,7 @@ from enum import IntEnum
 from typing import NamedTuple, List, Optional
 import random
 from BaseClasses import Item, ItemClassification
-from .Options import KeyItemSanityToggle, TrapToggle, AntidoteInPoolToggle
+from .Options import KeyItemSanityToggle, TrapToggle, AntidoteInPoolToggle, AmmoAndChargeToggle
 
 
 class Medievil2ItemCategory(IntEnum):
@@ -246,8 +246,11 @@ def BuildItemPool(count: int, options) -> List[str]:
     filler_item_names = [
         item_data.name
         for item_data in _all_items
-        if item_data.category == Medievil2ItemCategory.WEAPON_CHARGE
-        or item_data.category == Medievil2ItemCategory.WEAPON_AMMO
+        if (
+            (item_data.category == Medievil2ItemCategory.WEAPON_CHARGE or item_data.category == Medievil2ItemCategory.WEAPON_AMMO)
+            and hasattr(options, "ammo")
+            and options.ammo.value == AmmoAndChargeToggle.option_true
+        )
         or item_data.category == Medievil2ItemCategory.ENERGY
         or item_data.category == Medievil2ItemCategory.GOLD
         or (item_data.category == Medievil2ItemCategory.TRAP and options.traps.value == TrapToggle.option_true)
