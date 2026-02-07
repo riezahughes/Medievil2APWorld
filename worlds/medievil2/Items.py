@@ -232,12 +232,12 @@ def BuildItemPool(count: int, options) -> List[str]:
         or item_data.category == Medievil2ItemCategory.DANS_ARMOUR
     ]
 
-    for x in range(3):
-        item_pool_names.append("Progressive Valve")
-
     for item_name in progression_items:
         if item_name not in item_pool_names and len(item_pool_names) < count:
             item_pool_names.append(item_name)
+
+    for x in range(2):
+        item_pool_names.append("Progressive Valve")
 
     if options.life_bottles.value >= 1:
         for x in range(options.life_bottles.value - 1):
