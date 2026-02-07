@@ -228,6 +228,7 @@ def BuildItemPool(count: int, options) -> List[str]:
         or item_data.category == Medievil2ItemCategory.SHIELDS
         or item_data.category == Medievil2ItemCategory.RANGED_WEAPONS
         or item_data.category == Medievil2ItemCategory.SKILLS
+        or item_data.category == Medievil2ItemCategory.DANS_ARMOUR
     ]
 
     for item_name in progression_items:

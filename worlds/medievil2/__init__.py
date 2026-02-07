@@ -228,6 +228,7 @@ class Medievil2World(World):
             item_data.category == Medievil2ItemCategory.MELEE_WEAPONS
             or item_data.category == Medievil2ItemCategory.RANGED_WEAPONS
             or item_data.category == Medievil2ItemCategory.SHIELDS
+            or item_data.category == Medievil2ItemCategory.DANS_ARMOUR
         ):
             item_classification = ItemClassification.useful
         elif item_data.category == Medievil2ItemCategory.TRAP:
