@@ -37,6 +37,7 @@ setups
 build
 bundle/components.wxs
 dist
+/fuzz_output/
 /prof/
 README.html
 .vs/

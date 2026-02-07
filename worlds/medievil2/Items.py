@@ -157,9 +157,10 @@ _all_items: List[Medievil2ItemData] = [
     Medievil2ItemData("Town House Key", 77, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Time Stone", 78, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Antidote", 79, Medievil2ItemCategory.KEY_ITEMS, True),
-    Medievil2ItemData("Pond Room Valve", 80, Medievil2ItemCategory.KEY_ITEMS, True),
-    Medievil2ItemData("Hothouse Valve", 81, Medievil2ItemCategory.KEY_ITEMS, True),
-    Medievil2ItemData("Water Tank Valve", 82, Medievil2ItemCategory.KEY_ITEMS, True),
+    Medievil2ItemData("Progressive Valve", 80, Medievil2ItemCategory.KEY_ITEMS, True),
+    # Medievil2ItemData("Pond Room Valve", 80, Medievil2ItemCategory.KEY_ITEMS, True),
+    # Medievil2ItemData("Hothouse Valve", 81, Medievil2ItemCategory.KEY_ITEMS, True),
+    # Medievil2ItemData("Water Tank Valve", 82, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Cannon Ball", 83, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Front Door Key", 84, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Potting Shed Key", 85, Medievil2ItemCategory.KEY_ITEMS, True),
@@ -230,6 +231,9 @@ def BuildItemPool(count: int, options) -> List[str]:
         or item_data.category == Medievil2ItemCategory.SKILLS
         or item_data.category == Medievil2ItemCategory.DANS_ARMOUR
     ]
+
+    for x in range(3):
+        item_pool_names.append("Progressive Valve")
 
     for item_name in progression_items:
         if item_name not in item_pool_names and len(item_pool_names) < count:
