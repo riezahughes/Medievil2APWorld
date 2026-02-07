@@ -87,7 +87,7 @@ def set_key_blocks(self, locations: list[str], items: list[str]):
 
 def set_valve_block(self, count: int, locations: list[str]):
     for location in locations:
-        set_rule(self.get_location(location), lambda state: has_valves(self, count, state))
+        add_rule(self.get_location(location), lambda state: has_valves(self, count, state))
 
 
 def set_vanilla_level_progression(self):
@@ -388,7 +388,6 @@ def set_item_rules(self):
 
     set_key_blocks(self, ["Key Item: Water Tank Valve - KG"], ["Potting Shed Key"])
 
-    set_valve_block(self, 1, ["Key Item: Pond Room Valve - KG"])
     set_key_blocks(
         self,
         ["Key Item: Pond Room Valve - KG"],
@@ -396,16 +395,28 @@ def set_item_rules(self):
             "Potting Shed Key",
         ],
     )
-
-    set_valve_block(self, 2, ["Key Item: Hothouse Valve - KG", "Cleared: Kew Gardens"])
     set_key_blocks(self, ["Key Item: Hothouse Valve - KG", "Cleared: Kew Gardens"], ["Potting Shed Key"])
+    set_valve_block(self, 1, ["Key Item: Pond Room Valve - KG"])
+    set_valve_block(self, 3, ["Cleared: Kew Gardens"])
+    set_valve_block(self, 2, ["Key Item: Hothouse Valve - KG", "Cleared: Kew Gardens"])
 
-    set_valve_block(self, 3, ["Equipment: Silver Shield in Gauntlet Room - KG", "Gold Coins: Bag in Third Human Room - KG"])
     set_key_blocks(
         self,
         ["Equipment: Silver Shield in Gauntlet Room - KG", "Gold Coins: Bag in Third Human Room - KG"]
         + (["Chalice: Kew Gardens"] if self.options.include_chalices_in_checks == IncludeChalicesInChecksToggle.option_true else []),
         ["Potting Shed Key"],
+    )
+    set_valve_block(self, 3, ["Equipment: Silver Shield in Gauntlet Room - KG", "Gold Coins: Bag in Third Human Room - KG"])
+
+    set_key_blocks(
+        self,
+        [
+            "Gold Coins: Hand Maze Chest - KG",
+            "Gold Coins: Hand Maze Chest Reward 1 - KG",
+            "Gold Coins: Hand Maze Chest Reward 2- KG",
+            "Gold Coins: Hand Maze Chest Reward 3 - KG",
+        ],
+        ["Potting Shed Key", "Water Tank Valve", "Pond Room Valve", "Dan Hand"],
     )
 
     set_valve_block(
@@ -418,17 +429,6 @@ def set_item_rules(self):
             "Gold Coins: Hand Maze Chest Reward 3 - KG",
         ],
     )
-    set_key_blocks(
-        self,
-        [
-            "Gold Coins: Hand Maze Chest - KG",
-            "Gold Coins: Hand Maze Chest Reward 1 - KG",
-            "Gold Coins: Hand Maze Chest Reward 2- KG",
-            "Gold Coins: Hand Maze Chest Reward 3 - KG",
-        ],
-        ["Potting Shed Key", "Water Tank Valve", "Pond Room Valve", "Dan Hand"],
-    )
-
     # dankenstein - no blocks
     set_key_blocks(
         self, [] + (["Chalice: Dankenstein"] if self.options.include_chalices_in_checks == IncludeChalicesInChecksToggle.option_true else []), []
