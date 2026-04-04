@@ -171,8 +171,9 @@ _all_items: List[Medievil2ItemData] = [
     # Traps
     Medievil2ItemData("Trap: Heavy Dan", 90, Medievil2ItemCategory.TRAP, False),
     Medievil2ItemData("Trap: Light Dan", 91, Medievil2ItemCategory.TRAP, False),
-    Medievil2ItemData("Trap: Darkness", 92, Medievil2ItemCategory.TRAP, False),
-    Medievil2ItemData("Trap: Hudless", 93, Medievil2ItemCategory.TRAP, False),
+    # Medievil2ItemData("Trap: Darkness", 92, Medievil2ItemCategory.TRAP, False),
+    # Medievil2ItemData("Trap: Hudless", 93, Medievil2ItemCategory.TRAP, False),
+    Medievil2ItemData("Trap: Big Head", 94, Medievil2ItemCategory.TRAP, False),
 ]
 # Convert raw list of tuples into MedievilItemData NamedTuple instances
 # _all_items = [Medievil2ItemData(row[0], row[1], row[2], row[3]) for row in _all_items]
