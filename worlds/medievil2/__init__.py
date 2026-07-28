@@ -5,7 +5,7 @@ from BaseClasses import MultiWorld, Region, Item, Entrance, Tutorial, ItemClassi
 from Options import Toggle
 
 from worlds.AutoWorld import World, WebWorld
-from worlds.generic.Rules import set_rule, add_rule, add_item_rule
+from worlds.generic.Rules import add_item_rule
 
 from .Items import Medievil2Item, Medievil2ItemCategory, item_dictionary, item_descriptions, BuildItemPool
 from .Locations import Medievil2Location, Medievil2LocationCategory, location_tables, location_dictionary
@@ -242,15 +242,8 @@ class Medievil2World(World):
         return "Gold: (50)"  # this clearly needs looked into
 
     def set_rules(self) -> None:
-        for region in self.multiworld.get_regions(self.player):
-            for location in region.locations:
-                set_rule(location, lambda state: True)
-
         if self.options.goal.value == GoalOptions.DEFEAT_DEMON:
-            self.multiworld.completion_condition[self.player] = lambda state: defeat_demon_victory(self, state)
-
-        if self.options.keyitemsanity.value == KeyItemSanityToggle.option_true:
-            set_keyitemsanity_progression(self)
+            self.set_completion_rule(defeat_demon_victory())
 
         if self.options.progression_option.value == ProgressionOptions.OPEN:
             set_open_world_progression(self)
@@ -258,6 +251,7 @@ class Medievil2World(World):
             set_vanilla_level_progression(self)
 
         if self.options.keyitemsanity.value == KeyItemSanityToggle.option_true:
+            set_keyitemsanity_progression(self)
             set_item_rules(self)
 
         if self.options.include_chalices_in_checks.value == IncludeChalicesInChecksToggle.option_true:

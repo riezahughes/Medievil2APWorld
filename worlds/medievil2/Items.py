@@ -136,8 +136,9 @@ _all_items: List[Medievil2ItemData] = [
     # Medievil2ItemData("Torso", 57, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Bellows", 58, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Lost Soul", 59, Medievil2ItemCategory.KEY_ITEMS, True),
-    Medievil2ItemData("Golden Cog 1", 60, Medievil2ItemCategory.KEY_ITEMS, True),
-    Medievil2ItemData("Golden Cog 2", 60, Medievil2ItemCategory.KEY_ITEMS, True),
+    Medievil2ItemData("Progressive Golden Cog", 60, Medievil2ItemCategory.KEY_ITEMS, True),
+    # Medievil2ItemData("Golden Cog 1", 60, Medievil2ItemCategory.KEY_ITEMS, True),
+    # Medievil2ItemData("Golden Cog 2", 60, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Spell Page", 61, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Griffin Shield", 62, Medievil2ItemCategory.KEY_ITEMS, True),
     Medievil2ItemData("Unicorn Shield", 63, Medievil2ItemCategory.KEY_ITEMS, True),
@@ -239,6 +240,9 @@ def BuildItemPool(count: int, options) -> List[str]:
 
     for x in range(2):
         item_pool_names.append("Progressive Valve")
+
+    for x in range(2):
+        item_pool_names.append("Progressive Golden Cog")
 
     if options.life_bottles.value >= 1:
         for x in range(options.life_bottles.value - 1):

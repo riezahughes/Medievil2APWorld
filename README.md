@@ -146,3 +146,5 @@ Please refer to our [code of conduct](/docs/code_of_conduct.md).
 # Running Fuzzer
 
 `python fuzz.py -r 100 -j 16 -g medievil -n 1`
+
+Run Medievil 2's unit tests: `python -m unittest discover -s worlds/medievil2/test/ -t .`

@@ -1,274 +1,207 @@
-from worlds.generic.Rules import set_rule, add_rule
-from BaseClasses import CollectionState, Iterable
+import dataclasses
+from typing import TYPE_CHECKING
+
+from typing_extensions import override
+
+from BaseClasses import CollectionState, Entrance, Location
+from rule_builder.rules import CanReachLocation, Has, HasAll, Rule
 from .Options import IncludeChalicesInChecksToggle
 
-
-def is_level_cleared(self, location: str, state: CollectionState):
-    return state.can_reach_location("Cleared: " + location, self.player)
-
-
-def has_dan_hand_skill(self, state: CollectionState):
-    return state.has("Dan Hand", self.player)
+if TYPE_CHECKING:
+    from . import Medievil2World
 
 
-def is_boss_defeated(self, boss: str, state: CollectionState):  # can used later
-    return state.has("Boss: " + boss, self.player, 1)
+def cleared(level: str) -> Rule:
+    return CanReachLocation(f"Cleared: {level}")
 
 
-def has_keyitems_required(self, items: list[str], state: CollectionState):
-    passed_check = True
-    for item in items:
-        if state.has(item, self.player, 1) is False:
-            passed_check = False
-    return passed_check
+def key_items(*names: str) -> Rule:
+    return HasAll(*names)
 
 
-def has_lost_souls_required(self, count: int, state: CollectionState):
-    return state.count("Lost Soul", self.player) >= count
+DAN_HAND = Has("Dan Hand")
+GOOD_LIGHTNING = Has("Good Lightning")
+
+# The fixed list of "Cleared: X" locations tracked by HasNumberOfClearedLevels. Only these
+# 10 specific levels count -- Tyrannosaurus Wrecks, The Tomb, Naval Academy, Iron Slugger,
+# Cathedral Spires (and its Descent), and The Demon are NOT tracked.
+TRACKED_LEVELS: tuple[str, ...] = (
+    "Cleared: The Museum",
+    "Cleared: Kensington",
+    "Cleared: The Freakshow",
+    "Cleared: Greenwich Observatory",
+    "Cleared: Kew Gardens",
+    "Cleared: Dankenstein",
+    "Cleared: Wulfrum Hall",
+    "Cleared: Whitechapel",
+    "Cleared: The Sewers",
+    "Cleared: The Ripper",
+)
 
 
-def has_good_lightning(self, state: CollectionState):
-    return state.has("Good Lightning", self.player)
+@dataclasses.dataclass()
+class HasNumberOfClearedLevels(Rule["Medievil2World"], game="Medievil 2"):
+    """Checks that at least `count` of the 10 tracked "Cleared: X" LOCATIONS are reachable."""
+
+    count: int
+
+    @override
+    def _instantiate(self, world: "Medievil2World") -> Rule.Resolved:
+        return self.Resolved(
+            TRACKED_LEVELS,
+            self.count,
+            player=world.player,
+            caching_enabled=getattr(world, "rule_caching_enabled", False),
+        )
+
+    @override
+    def __str__(self) -> str:
+        return f"HasNumberOfClearedLevels({self.count})"
+
+    class Resolved(Rule.Resolved):
+        tracked_levels: tuple[str, ...]
+        count: int
+
+        @override
+        def _evaluate(self, state: CollectionState) -> bool:
+            completed_levels = 0
+            for location_name in self.tracked_levels:
+                if state.can_reach_location(location_name, self.player):
+                    completed_levels += 1
+            return completed_levels >= self.count
+
+        @override
+        def location_dependencies(self) -> dict[str, set[int]]:
+            return {name: {id(self)} for name in self.tracked_levels}
+
+        @override
+        def __str__(self) -> str:
+            return f"Has {self.count} cleared levels"
 
 
-def has_valves(self, count: int, state: CollectionState):
-    return state.has("Progressive Valve", self.player, count)
+def layer_rule(world: "Medievil2World", spot: "Location | Entrance", rule: Rule) -> None:
+    existing = spot.access_rule
+    if existing is Location.access_rule or existing is Entrance.access_rule:
+        world.set_rule(spot, rule)
+        return
+    resolved = rule.resolve(world)
+    world.register_rule_dependencies(resolved)
+    spot.access_rule = lambda state, e=existing, n=resolved: e(state) and n(state)
 
 
-def has_number_of_chalices(self, count, state: CollectionState):
-    chalice_list = [
-        "Chalice: The Museum",
-        "Chalice: Kensington",
-        "Chalice: The Freakshow",
-        "Chalice: Greenwhich Observatory",
-        "Chalice: Kew Gardens",
-        "Chalice: Dankenstein",
-        "Chalice: Wulfrum Hall",
-        "Chalice: Whitechapel",
-        "Chalice: The Sewers",
-        "Chalice: The Ripper",
-    ]
-
-    collected_chalices = 0
-
-    for chalice_location in chalice_list:
-        if state.can_reach_location(chalice_location, self.player):
-            collected_chalices += 1
-    return collected_chalices >= count
-
-
-def has_cleared_levels(self, count, state: CollectionState):
-    level_list = [
-        "Cleared: The Museum",
-        "Cleared: Kensington",
-        "Cleared: The Freakshow",
-        "Cleared: Greenwich Observatory",
-        "Cleared: Kew Gardens",
-        "Cleared: Dankenstein",
-        "Cleared: Wulfrum Hall",
-        "Cleared: Whitechapel",
-        "Cleared: The Sewers",
-        "Cleared: The Ripper",
-    ]
-
-    completed_levels = 0
-
-    for location in level_list:
-        if state.can_reach_location(location, self.player):
-            completed_levels += 1
-    return completed_levels >= count
-
-
-def set_key_blocks(self, locations: list[str], items: list[str]):
+def set_key_blocks(self: "Medievil2World", locations: list[str], items: list[str]) -> None:
     for location in locations:
-        for item in items:
-            set_rule(self.get_location(location), lambda state: has_keyitems_required(self, [item], state))
+        self.set_rule(self.get_location(location), key_items(*items))
 
 
-def set_valve_block(self, count: int, locations: list[str]):
+def set_valve_block(self: "Medievil2World", count: int, locations: list[str]) -> None:
     for location in locations:
-        add_rule(self.get_location(location), lambda state: has_valves(self, count, state))
+        layer_rule(self, self.get_location(location), Has("Progressive Valve", count))
 
 
-def set_vanilla_level_progression(self):
-    set_rule(self.get_entrance("Hub -> The Museum"), lambda state: is_level_cleared(self, "Menu", state))
-    set_rule(self.get_entrance("The Museum -> Tyrannosaurus Wrecks"), lambda state: is_level_cleared(self, "The Museum", state))
-    set_rule(self.get_entrance("Tyrannosaurus Wrecks -> Hub"), lambda state: is_level_cleared(self, "Tyrannosaurus Wrecks", state))
-    set_rule(self.get_entrance("Hub -> The Museum"), lambda state: is_level_cleared(self, "Hub", state))
-    set_rule(self.get_entrance("Hub -> Tyrannosaurus Wrecks"), lambda state: is_level_cleared(self, "The Museum", state))
-    set_rule(self.get_entrance("Hub -> Kensington"), lambda state: is_level_cleared(self, "Tyrannosaurus Wrecks", state))
-    set_rule(self.get_entrance("Kensington -> The Tomb"), lambda state: is_level_cleared(self, "Kensington", state))
-    set_rule(self.get_entrance("Hub -> The Freakshow"), lambda state: is_level_cleared(self, "The Tomb", state))
-    set_rule(
-        self.get_entrance("Hub -> Greenwich Observatory"),
-        lambda state: is_level_cleared(self, "The Freakshow", state) and has_dan_hand_skill(self, state),
-    )
-    set_rule(
-        self.get_entrance("Greenwich Observatory -> Greenwich, Naval Academy"), lambda state: is_level_cleared(self, "Greenwich Observatory", state)
-    )
-    set_rule(self.get_entrance("Hub -> Kew Gardens"), lambda state: is_level_cleared(self, "Naval Academy", state))
-    set_rule(self.get_entrance("Hub -> Dankenstein"), lambda state: is_level_cleared(self, "Kew Gardens", state))
-    set_rule(self.get_entrance("Dankenstein -> Iron Slugger"), lambda state: is_level_cleared(self, "Dankenstein", state))
-    set_rule(self.get_entrance("Hub -> Iron Slugger"), lambda state: is_level_cleared(self, "Dankenstein", state))
-    set_rule(self.get_entrance("Hub -> Wulfrum Hall"), lambda state: is_level_cleared(self, "Iron Slugger", state))
-    set_rule(self.get_entrance("Wulfrum Hall -> The Count"), lambda state: is_level_cleared(self, "Wulfrum Hall", state))
-    set_rule(self.get_entrance("Hub -> The Count"), lambda state: is_level_cleared(self, "Wulfrum Hall", state))
-    set_rule(self.get_entrance("Hub -> Whitechapel"), lambda state: is_level_cleared(self, "The Count", state))
-    set_rule(self.get_entrance("Hub -> The Sewers"), lambda state: is_level_cleared(self, "Whitechapel", state))
-    set_rule(self.get_entrance("Hub -> The Time Machine"), lambda state: is_level_cleared(self, "The Sewers", state))
-    set_rule(self.get_entrance("The Time Machine -> The Time Machine, The Sewers"), lambda state: is_level_cleared(self, "The Time Machine", state))
-    set_rule(
-        self.get_entrance("The Time Machine, The Sewers -> The Ripper"), lambda state: is_level_cleared(self, "The Time Machine, The Sewers", state)
-    )
-    set_rule(self.get_entrance("Hub -> Cathedral Spires"), lambda state: is_level_cleared(self, "The Ripper", state))
-    set_rule(self.get_entrance("Cathedral Spires -> Cathedral Spires, The Descent"), lambda state: is_level_cleared(self, "Cathedral Spires", state))
-    set_rule(self.get_entrance("Hub -> The Demon"), lambda state: is_level_cleared(self, "Cathedral Spires, The Descent", state))
+def set_vanilla_level_progression(self: "Medievil2World") -> None:
+    self.set_rule(self.get_entrance("The Museum -> Tyrannosaurus Wrecks"), cleared("The Museum"))
+    self.set_rule(self.get_entrance("Tyrannosaurus Wrecks -> Hub"), cleared("Tyrannosaurus Wrecks"))
+    self.set_rule(self.get_entrance("Hub -> Tyrannosaurus Wrecks"), cleared("The Museum"))
+    self.set_rule(self.get_entrance("Hub -> Kensington"), cleared("Tyrannosaurus Wrecks"))
+    self.set_rule(self.get_entrance("Kensington -> The Tomb"), cleared("Kensington"))
+    self.set_rule(self.get_entrance("Hub -> The Freakshow"), cleared("The Tomb"))
+    self.set_rule(self.get_entrance("Hub -> Greenwich Observatory"), cleared("The Freakshow") & DAN_HAND)
+    self.set_rule(self.get_entrance("Greenwich Observatory -> Greenwich, Naval Academy"), cleared("Greenwich Observatory"))
+    self.set_rule(self.get_entrance("Hub -> Kew Gardens"), cleared("Naval Academy"))
+    self.set_rule(self.get_entrance("Hub -> Dankenstein"), cleared("Kew Gardens"))
+    self.set_rule(self.get_entrance("Dankenstein -> Iron Slugger"), cleared("Dankenstein"))
+    self.set_rule(self.get_entrance("Hub -> Iron Slugger"), cleared("Dankenstein"))
+    self.set_rule(self.get_entrance("Hub -> Wulfrum Hall"), cleared("Iron Slugger"))
+    self.set_rule(self.get_entrance("Wulfrum Hall -> The Count"), cleared("Wulfrum Hall"))
+    self.set_rule(self.get_entrance("Hub -> The Count"), cleared("Wulfrum Hall"))
+    self.set_rule(self.get_entrance("Hub -> Whitechapel"), cleared("The Count"))
+    self.set_rule(self.get_entrance("Hub -> The Sewers"), cleared("Whitechapel"))
+    self.set_rule(self.get_entrance("Hub -> The Time Machine"), cleared("The Sewers"))
+    self.set_rule(self.get_entrance("The Time Machine -> The Time Machine, The Sewers"), cleared("The Time Machine"))
+    self.set_rule(self.get_entrance("The Time Machine, The Sewers -> The Ripper"), cleared("The Time Machine, The Sewers"))
+    self.set_rule(self.get_entrance("Hub -> Cathedral Spires"), cleared("The Ripper"))
+    self.set_rule(self.get_entrance("Cathedral Spires -> Cathedral Spires, The Descent"), cleared("Cathedral Spires"))
+    self.set_rule(self.get_entrance("Hub -> The Demon"), cleared("Cathedral Spires, The Descent"))
 
 
-def set_open_world_progression(self):
-    set_rule(self.get_entrance("Hub -> The Museum"), lambda state: is_level_cleared(self, "Menu", state))
-    set_rule(self.get_entrance("The Museum -> Tyrannosaurus Wrecks"), lambda state: is_level_cleared(self, "The Museum", state))
-    set_rule(self.get_entrance("Tyrannosaurus Wrecks -> Hub"), lambda state: is_level_cleared(self, "Tyrannosaurus Wrecks", state))
-    set_rule(self.get_entrance("Kensington -> The Tomb"), lambda state: is_level_cleared(self, "Kensington", state))
-    set_rule(
-        self.get_entrance("Greenwich Observatory -> Greenwich, Naval Academy"), lambda state: is_level_cleared(self, "Greenwich Observatory", state)
-    )
-    set_rule(self.get_entrance("Dankenstein -> Iron Slugger"), lambda state: is_level_cleared(self, "Dankenstein", state))
-    set_rule(self.get_entrance("Wulfrum Hall -> The Count"), lambda state: is_level_cleared(self, "Wulfrum Hall", state))
-    set_rule(self.get_entrance("The Time Machine -> The Time Machine, The Sewers"), lambda state: is_level_cleared(self, "The Time Machine", state))
-    set_rule(
-        self.get_entrance("The Time Machine, The Sewers -> The Ripper"), lambda state: is_level_cleared(self, "The Time Machine, The Sewers", state)
-    )
-    set_rule(self.get_entrance("Cathedral Spires -> Cathedral Spires, The Descent"), lambda state: is_level_cleared(self, "Cathedral Spires", state))
+def set_open_world_progression(self: "Medievil2World") -> None:
+    self.set_rule(self.get_entrance("The Museum -> Tyrannosaurus Wrecks"), cleared("The Museum"))
+    self.set_rule(self.get_entrance("Tyrannosaurus Wrecks -> Hub"), cleared("Tyrannosaurus Wrecks"))
+    self.set_rule(self.get_entrance("Kensington -> The Tomb"), cleared("Kensington"))
+    self.set_rule(self.get_entrance("Greenwich Observatory -> Greenwich, Naval Academy"), cleared("Greenwich Observatory"))
+    self.set_rule(self.get_entrance("Dankenstein -> Iron Slugger"), cleared("Dankenstein"))
+    self.set_rule(self.get_entrance("Wulfrum Hall -> The Count"), cleared("Wulfrum Hall"))
+    self.set_rule(self.get_entrance("The Time Machine -> The Time Machine, The Sewers"), cleared("The Time Machine"))
+    self.set_rule(self.get_entrance("The Time Machine, The Sewers -> The Ripper"), cleared("The Time Machine, The Sewers"))
+    self.set_rule(self.get_entrance("Cathedral Spires -> Cathedral Spires, The Descent"), cleared("Cathedral Spires"))
 
 
-def set_keyitemsanity_progression(self):
-    set_rule(self.get_entrance("Hub -> The Museum"), lambda state: is_level_cleared(self, "Menu", state))
-    set_rule(
-        self.get_entrance("The Museum -> Tyrannosaurus Wrecks"),
-        lambda state: (
-            has_keyitems_required(self, ["Museum Key", "Dinosaur Key", "Cannon Ball", "Torch"], state) and is_level_cleared(self, "The Museum", state)
-        ),
-    )
-    set_rule(self.get_entrance("Tyrannosaurus Wrecks -> Hub"), lambda state: is_level_cleared(self, "Tyrannosaurus Wrecks", state))
-    set_rule(
-        self.get_entrance("Hub -> The Museum"),
-        lambda state: (
-            is_level_cleared(self, "The Museum", state) and has_keyitems_required(self, ["Museum Key", "Dinosaur Key", "Cannon Ball", "Torch"], state)
-        ),
-    )
-    set_rule(
-        self.get_entrance("Hub -> Tyrannosaurus Wrecks"),
-        lambda state: (
-            is_level_cleared(self, "The Museum", state) and has_keyitems_required(self, ["Museum Key", "Dinosaur Key", "Cannon Ball", "Torch"], state)
-        ),
-    )
-    set_rule(self.get_entrance("Hub -> Kensington"), lambda state: is_level_cleared(self, "Tyrannosaurus Wrecks", state))
-    set_rule(
-        self.get_entrance("Kensington -> The Tomb"),
-        lambda state: (
-            is_level_cleared(self, "Kensington", state) and has_keyitems_required(self, ["Depot Key", "Town House Key", "Pocket Watch"], state)
-        ),
-    )
-    set_rule(
+def set_keyitemsanity_progression(self: "Medievil2World") -> None:
+    layer_rule(self, self.get_entrance("The Museum -> Tyrannosaurus Wrecks"), key_items("Museum Key", "Dinosaur Key", "Cannon Ball", "Torch"))
+    layer_rule(self, self.get_entrance("Hub -> Tyrannosaurus Wrecks"), key_items("Museum Key", "Dinosaur Key", "Cannon Ball", "Torch"))
+    layer_rule(self, self.get_entrance("Kensington -> The Tomb"), key_items("Depot Key", "Town House Key", "Pocket Watch"))
+    layer_rule(
+        self,
         self.get_entrance("The Tomb -> Hub"),
-        lambda state: (
-            is_level_cleared(self, "Kensington", state)
-            and has_keyitems_required(self, ["Staff of Anubis", "Scroll of Sekhmet", "Tablet of Horus"], state)
-        ),
+        cleared("Kensington") & key_items("Staff of Anubis", "Scroll of Sekhmet", "Tablet of Horus"),
     )
-    set_rule(
-        self.get_entrance("Hub -> The Freakshow"),
-        lambda state: is_level_cleared(self, "The Tomb", state) and has_keyitems_required(self, ["Elephant Key 1", "Elephant Key 2"], state),
-    )
-    set_rule(
-        self.get_entrance("Hub -> Greenwich Observatory"),
-        lambda state: is_level_cleared(self, "The Freakshow", state) and has_dan_hand_skill(self, state),
-    )
-    set_rule(
-        self.get_entrance("Greenwich Observatory -> Greenwich, Naval Academy"),
-        lambda state: is_level_cleared(self, "Greenwich Observatory", state) and has_keyitems_required(self, ["Bellows"], state),
-    )
-    set_rule(
-        self.get_entrance("Hub -> Kew Gardens"),
-        lambda state: (
-            is_level_cleared(self, "Naval Academy", state) and has_valves(self, 3, state) and has_keyitems_required(self, ["Potting Shed Key"], state)
-        ),
-    )
-    set_rule(self.get_entrance("Hub -> Dankenstein"), lambda state: is_level_cleared(self, "Kew Gardens", state))
-    set_rule(self.get_entrance("Dankenstein -> Iron Slugger"), lambda state: is_level_cleared(self, "Dankenstein", state))
-    set_rule(self.get_entrance("Hub -> Iron Slugger"), lambda state: is_level_cleared(self, "Dankenstein", state))
-    set_rule(
-        self.get_entrance("Hub -> Wulfrum Hall"),
-        lambda state: is_level_cleared(self, "Iron Slugger", state) and has_keyitems_required(self, ["Front Door Key"], state),
-    )
-    set_rule(self.get_entrance("Wulfrum Hall -> The Count"), lambda state: is_level_cleared(self, "Wulfrum Hall", state))
-    set_rule(self.get_entrance("Hub -> The Count"), lambda state: is_level_cleared(self, "Wulfrum Hall", state))
-    set_rule(
+    layer_rule(self, self.get_entrance("Hub -> The Freakshow"), key_items("Elephant Key 1", "Elephant Key 2"))
+    layer_rule(self, self.get_entrance("Hub -> Greenwich Observatory"), DAN_HAND)
+    layer_rule(self, self.get_entrance("Greenwich Observatory -> Greenwich, Naval Academy"), key_items("Bellows"))
+    layer_rule(self, self.get_entrance("Hub -> Kew Gardens"), Has("Progressive Valve", 3) & key_items("Potting Shed Key"))
+    layer_rule(self, self.get_entrance("Hub -> Wulfrum Hall"), key_items("Front Door Key"))
+    layer_rule(
+        self,
         self.get_entrance("Hub -> Whitechapel"),
-        lambda state: (
-            is_level_cleared(self, "The Count", state)
-            and has_keyitems_required(self, ["Library Key", "Club Membership Card", "Beard", "Unicorn Shield", "Griffin Shield"], state)
-        ),
+        key_items("Library Key", "Club Membership Card", "Beard", "Unicorn Shield", "Griffin Shield"),
     )
-    set_rule(
-        self.get_entrance("Hub -> The Sewers"),
-        lambda state: is_level_cleared(self, "Whitechapel", state) and has_keyitems_required(self, ["Poster"], state),
-    )
-    set_rule(
+    layer_rule(self, self.get_entrance("Hub -> The Sewers"), key_items("Poster"))
+    layer_rule(
+        self,
         self.get_entrance("Hub -> The Time Machine"),
-        lambda state: (
-            is_level_cleared(self, "The Sewers", state)
-            and has_keyitems_required(
-                self, ["Time Machine Piece (Contact Room)", "Time Machine Piece (Earth Room)", "Time Machine Piece (Space Room)"], state
-            )
-        ),
+        key_items("Time Machine Piece (Contact Room)", "Time Machine Piece (Earth Room)", "Time Machine Piece (Space Room)"),
     )
-    set_rule(
-        self.get_entrance("The Time Machine -> The Time Machine, The Sewers"),
-        lambda state: is_level_cleared(self, "The Time Machine", state) and has_keyitems_required(self, ["King Mullock's Key"], state),
-    )
-    set_rule(
+    layer_rule(self, self.get_entrance("The Time Machine -> The Time Machine, The Sewers"), key_items("King Mullock's Key"))
+    layer_rule(
+        self,
         self.get_entrance("The Time Machine, The Sewers -> The Ripper"),
-        lambda state: (
-            is_level_cleared(self, "The Time Machine, The Sewers", state)
-            and has_good_lightning(self, state)
-            and has_keyitems_required(self, ["Time Stone"], state)
-        ),
+        GOOD_LIGHTNING & key_items("Time Stone"),
     )
-    set_rule(
-        self.get_entrance("Hub -> Cathedral Spires"),
-        lambda state: is_level_cleared(self, "The Ripper", state) and has_lost_souls_required(self, 5, state),
-    )
-    set_rule(
+    layer_rule(self, self.get_entrance("Hub -> Cathedral Spires"), Has("Lost Soul", 5))
+    layer_rule(
+        self,
         self.get_entrance("Cathedral Spires -> Cathedral Spires, The Descent"),
-        lambda state: (
-            is_level_cleared(self, "Cathedral Spires", state)
-            and has_lost_souls_required(self, 12, state)
-            and has_keyitems_required(self, ["Golden Cog 1", "Golden Cog 2"], state)
-        ),
+        Has("Lost Soul", 12) & Has("Progressive Golden Cog", 2),
     )
-    set_rule(
+    layer_rule(
+        self,
         self.get_entrance("Cathedral Spires, The Descent -> The Demon"),
-        lambda state: is_level_cleared(self, "Cathedral Spires, The Descent", state),
+        cleared("Cathedral Spires, The Descent") & Has("Lost Soul", 12),
     )
-    set_rule(self.get_entrance("Hub -> The Demon"), lambda state: is_level_cleared(self, "Cathedral Spires, The Descent", state))
+    layer_rule(self, self.get_entrance("Hub -> The Demon"), Has("Lost Soul", 12))
 
 
-def set_chalice_vanilla_rules(self):
-    set_rule(self.get_location("Chalice Reward: Cane Stick"), lambda state: has_cleared_levels(self, 1, state))
-    set_rule(self.get_location("Chalice Reward: Hammer"), lambda state: has_cleared_levels(self, 2, state))
-    set_rule(self.get_location("Chalice Reward: Crossbow"), lambda state: has_cleared_levels(self, 3, state))
-    set_rule(self.get_location("Chalice Reward: Axe"), lambda state: has_cleared_levels(self, 4, state))
-    set_rule(self.get_location("Chalice Reward: Bombs"), lambda state: has_cleared_levels(self, 5, state))
-    set_rule(self.get_location("Chalice Reward: Broadsword"), lambda state: has_cleared_levels(self, 6, state))
-    set_rule(self.get_location("Chalice Reward: Lightning"), lambda state: has_cleared_levels(self, 7, state))
-    set_rule(self.get_location("Chalice Reward: Blunderbuss"), lambda state: has_cleared_levels(self, 8, state))
-    set_rule(self.get_location("Chalice Reward: Magic Sword"), lambda state: has_cleared_levels(self, 9, state))
-    set_rule(self.get_location("Chalice Reward: Gatling Gun"), lambda state: has_cleared_levels(self, 10, state))
+def set_chalice_vanilla_rules(self: "Medievil2World") -> None:
+    for i, name in enumerate(
+        (
+            "Cane Stick",
+            "Hammer",
+            "Crossbow",
+            "Axe",
+            "Bombs",
+            "Broadsword",
+            "Lightning",
+            "Blunderbuss",
+            "Magic Sword",
+            "Gatling Gun",
+        ),
+        start=1,
+    ):
+        self.set_rule(self.get_location(f"Chalice Reward: {name}"), HasNumberOfClearedLevels(i))
 
 
-def set_item_rules(self):
+def set_item_rules(self: "Medievil2World") -> None:
     # Hub
 
     # The Museum
@@ -342,8 +275,6 @@ def set_item_rules(self):
 
     set_key_blocks(self, ["Winston: Museum Roof - KT", "Cleared: Kensington"], ["Depot Key", "Town House Key", "Pocket Watch"])
 
-    set_key_blocks(self, [], ["Dan Hand"])
-
     # The Tomb
 
     set_key_blocks(self, ["Gold Coins: Hand Area Chest Ground Floor - TT", "Gold Coins: Hand Area Chest Upper Floor - TT"], ["Dan Hand"])
@@ -366,11 +297,8 @@ def set_item_rules(self):
 
     # Greenwich Observatory
 
-    set_key_blocks(
-        self,
-        [] + (["Chalice: Greenwich Observatory"] if self.options.include_chalices_in_checks == IncludeChalicesInChecksToggle.option_true else []),
-        ["Dan Hand"],
-    )
+    if self.options.include_chalices_in_checks == IncludeChalicesInChecksToggle.option_true:
+        set_key_blocks(self, ["Chalice: Greenwich Observatory"], ["Dan Hand"])
 
     set_key_blocks(
         self, ["Gold Coins: Hand Area Chest 1 - GO", "Gold Coins: Hand Area Chest 2 - GO", "Gold Coins: Hand Area Chest 3 - GO"], ["Dan Hand"]
@@ -416,7 +344,7 @@ def set_item_rules(self):
             "Gold Coins: Hand Maze Chest Reward 2- KG",
             "Gold Coins: Hand Maze Chest Reward 3 - KG",
         ],
-        ["Potting Shed Key", "Water Tank Valve", "Pond Room Valve", "Dan Hand"],
+        ["Potting Shed Key", "Dan Hand"],
     )
 
     set_valve_block(
@@ -430,9 +358,6 @@ def set_item_rules(self):
         ],
     )
     # dankenstein - no blocks
-    set_key_blocks(
-        self, [] + (["Chalice: Dankenstein"] if self.options.include_chalices_in_checks == IncludeChalicesInChecksToggle.option_true else []), []
-    )
     # iron slugger - no blocks
 
     # Wulfrum Hall
@@ -470,10 +395,6 @@ def set_item_rules(self):
 
     # Sewers - nothing
 
-    set_key_blocks(
-        self, [] + (["Chalice: The Sewers"] if self.options.include_chalices_in_checks == IncludeChalicesInChecksToggle.option_true else []), []
-    )
-
     # time machine - nothing
 
     set_key_blocks(
@@ -488,14 +409,10 @@ def set_item_rules(self):
 
     # nothing in the ripper
 
-    set_key_blocks(
-        self, [] + (["Chalice: The Ripper"] if self.options.include_chalices_in_checks == IncludeChalicesInChecksToggle.option_true else []), []
-    )
-
     # nothing blocked in cathedral spires
 
     # The Descent
 
     # need two of these.
-    set_key_blocks(self, ["Key Item: Golden Cog in Hand Area - CSTD"], ["Golden Cog 1"])
-    set_key_blocks(self, ["Cleared: Cathedral Spires, The Descent"], ["Golden Cog 1", "Golden Cog 2"])
+    self.set_rule(self.get_location("Key Item: Golden Cog in Hand Area - CSTD"), Has("Progressive Golden Cog", 1))
+    self.set_rule(self.get_location("Cleared: Cathedral Spires, The Descent"), Has("Progressive Golden Cog", 2))
