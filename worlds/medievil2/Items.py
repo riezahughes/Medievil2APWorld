@@ -241,7 +241,7 @@ def BuildItemPool(count: int, options) -> List[str]:
     for x in range(2):
         item_pool_names.append("Progressive Valve")
 
-    for x in range(2):
+    for x in range(1):
         item_pool_names.append("Progressive Golden Cog")
 
     if options.life_bottles.value >= 1:
