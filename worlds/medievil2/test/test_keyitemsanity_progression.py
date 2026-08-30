@@ -7,6 +7,7 @@ the list (the bug this replaced only checked the last item).
 """
 
 from . import Medievil2TestBase
+from ..Options import ProgressionOptions
 
 
 class KeyItemSanityProgressionTest(Medievil2TestBase):
@@ -91,15 +92,18 @@ class KeyItemSanityProgressionTest(Medievil2TestBase):
         lost_souls = self.get_items_by_name("Lost Soul")
         self.assertGreaterEqual(len(lost_souls), 12, "test assumes at least 12 Lost Soul copies in the pool")
 
-        self.assertFalse(self.can_reach_entrance("Hub -> Cathedral Spires"))
-        self.collect(lost_souls[:5])
+        # Cathedral Spires needs no souls (gated by The Ripper clear, already reached above).
         self.assertTrue(self.can_reach_entrance("Hub -> Cathedral Spires"))
 
-        self.collect(self.get_items_by_name("Progressive Golden Cog"))
+        # The Descent needs the 5 souls from Cathedral Spires, not 12, and no golden cogs.
         self.assertFalse(self.can_reach_entrance("Cathedral Spires -> Cathedral Spires, The Descent"))
-        self.collect(lost_souls[5:12])  # 5 + 7 = 12 total
+        self.collect(lost_souls[:5])
         self.assertTrue(self.can_reach_entrance("Cathedral Spires -> Cathedral Spires, The Descent"))
 
+        # The Demon needs all 12 souls and a cleared Descent (which needs both golden cogs).
+        self.collect(self.get_items_by_name("Progressive Golden Cog"))
+        self.assertFalse(self.can_reach_entrance("Hub -> The Demon"))
+        self.collect(lost_souls[5:12])  # 5 + 7 = 12 total
         self.assertTrue(self.can_reach_entrance("Hub -> The Demon"))
         self.assertBeatable(True)
 
@@ -157,3 +161,22 @@ class KeyItemSanityProgressionTest(Medievil2TestBase):
         self.collect(lost_souls[11:12])
         self.assertTrue(self.can_reach_entrance("Hub -> The Demon"))
         self.assertTrue(self.can_reach_entrance("Cathedral Spires, The Descent -> The Demon"))
+
+
+class KeyItemSanityOpenProgressionTest(Medievil2TestBase):
+    options = {
+        "progression_option": ProgressionOptions.OPEN,
+        "keyitemsanity": 1,
+    }
+
+    def test_descent_requires_five_souls_in_open_mode(self) -> None:
+        # Collect everything except Lost Souls so only the soul gates remain.
+        self.collect_all_but("Lost Soul")
+
+        # Open mode leaves "Hub -> Cathedral Spires" ungated.
+        self.assertTrue(self.can_reach_entrance("Hub -> Cathedral Spires"))
+
+        lost_souls = self.get_items_by_name("Lost Soul")
+        self.assertFalse(self.can_reach_entrance("Cathedral Spires -> Cathedral Spires, The Descent"))
+        self.collect(lost_souls[:5])
+        self.assertTrue(self.can_reach_entrance("Cathedral Spires -> Cathedral Spires, The Descent"))

@@ -168,11 +168,10 @@ def set_keyitemsanity_progression(self: "Medievil2World") -> None:
         self.get_entrance("The Time Machine, The Sewers -> The Ripper"),
         GOOD_LIGHTNING & key_items("Time Stone"),
     )
-    layer_rule(self, self.get_entrance("Hub -> Cathedral Spires"), Has("Lost Soul", 5))
     layer_rule(
         self,
         self.get_entrance("Cathedral Spires -> Cathedral Spires, The Descent"),
-        Has("Lost Soul", 12) & Has("Progressive Golden Cog", 2),
+        Has("Lost Soul", 5),
     )
     layer_rule(
         self,
