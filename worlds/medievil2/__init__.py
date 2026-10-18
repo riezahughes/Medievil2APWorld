@@ -167,6 +167,9 @@ class Medievil2World(World):
             ):
                 continue
 
+            if self.options.progression_option == ProgressionOptions.OPEN and "Book: Professor's Diary" in location.name:
+                continue
+
             if location.category in self.enabled_location_categories:
                 new_location = Medievil2Location(
                     self.player,

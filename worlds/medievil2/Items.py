@@ -238,11 +238,12 @@ def BuildItemPool(count: int, options) -> List[str]:
         if item_name not in item_pool_names and len(item_pool_names) < count:
             item_pool_names.append(item_name)
 
-    for x in range(2):
-        item_pool_names.append("Progressive Valve")
+    if options.keyitemsanity.value == KeyItemSanityToggle.option_true:
+        for x in range(2):
+            item_pool_names.append("Progressive Valve")
 
-    for x in range(1):
-        item_pool_names.append("Progressive Golden Cog")
+        for x in range(1):
+            item_pool_names.append("Progressive Golden Cog")
 
     if options.life_bottles.value >= 1:
         for x in range(options.life_bottles.value - 1):
