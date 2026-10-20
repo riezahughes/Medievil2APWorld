@@ -19,6 +19,7 @@ class Medievil2LocationCategory(IntEnum):
     WEAPON = 10
     LEVEL_END = 11
     EVENT = 12
+    VICTORY = 13
 
 
 class Medievil2LocationData(NamedTuple):
@@ -81,6 +82,8 @@ class Medievil2Location(Location):
             if region_name in location_tables:
                 # Enumerate the items within the current region, starting from current_region_base_id
                 for j, location_data in enumerate(location_tables[region_name]):
+                    if location_data.category == Medievil2LocationCategory.VICTORY:
+                        continue
                     # Assign an ID to each location within the region
                     # The ID for each location in a region will be current_region_base_id + j
                     # print(f"{current_region_base_id + j}: {location_data.name}")
@@ -424,7 +427,7 @@ location_tables = {
     # Boss Fight
     "The Demon": [
         Medievil2LocationData("Winston: Entrance - TD", "Ammo: Gold Shield (100)", Medievil2LocationCategory.WINSTON),
-        Medievil2LocationData("Cleared: The Demon", "Ammo: Gold Shield (100)", Medievil2LocationCategory.LEVEL_END),
+        Medievil2LocationData("Cleared: The Demon", "Victory", Medievil2LocationCategory.VICTORY),
     ],
 }
 

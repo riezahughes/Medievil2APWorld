@@ -179,6 +179,10 @@ class Medievil2World(World):
                     self.location_name_to_id[location.name],
                     new_region,
                 )
+            elif location.category == Medievil2LocationCategory.VICTORY:
+                # Goal event: no ID, locked Victory item. The client sets goal completion when the Demon dies.
+                new_location = Medievil2Location(self.player, location.name, location.category, location.default_item, None, new_region)
+                new_location.place_locked_item(Medievil2Item("Victory", ItemClassification.progression, None, self.player))
             else:
                 event_item = self.create_item(location.default_item)
                 new_location = Medievil2Location(self.player, location.name, location.category, location.default_item, None, new_region)
@@ -291,6 +295,9 @@ class Medievil2World(World):
         locations_address = []
         locations_target = []
         for location in self.multiworld.get_filled_locations():
+            if location.address is None:
+                # event locations (e.g. the Demon victory) are never sent to the client
+                continue
             if location.item is not None:
                 if location.item.player == self.player:
                     # we are the receiver of the item
